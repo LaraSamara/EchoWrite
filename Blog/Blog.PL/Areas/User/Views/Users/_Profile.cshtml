@@ -1,0 +1,52 @@
+﻿@model UserProfileViewModel
+<section class="profile d-flex align-items-end justify-content-center flex-column">
+    <div class="wrapper d-flex align-items-stretch justify-content-center flex-column p-3">
+        <div class="top d-flex align-items-center justify-content-start mb-3">
+            <div class="img me-3">
+                @if (Model.HavePicture)
+                {
+                    <img src="~/Files/Images/@Model.UserProfilePictureUrl" alt="User Picture" class="w-100" />
+                }
+                else
+                {
+                    <div class="content text-uppercase">@Model.UserProfilePictureUrl</div>
+                }
+            </div>
+            <div class="user-info d-flex justify-content-center align-items-start flex-column">
+                <div class="name text-capitalize">@Model.UserName</div>
+                <div class="Email">@Model.Email</div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="profile-info d-flex justify-content-between align-items-center my-3">
+                <a href="#postFeed" class="posts d-flex align-items-center justify-content-center flex-column">
+                    <div class="number">@Model.PostCount</div>
+                    <div class="">Posts</div>
+                </a>
+                <a id="followers-link" class="followers d-flex align-items-center justify-content-center flex-column" data-id = "@Model.UserId">
+                    <div class="number">@Model.FollowersCount</div>
+                    <div class="">followers</div>
+                </a>
+                <a id="following-link" class="following d-flex align-items-center justify-content-center flex-column" data-id="@Model.UserId">
+                    <div class="number">@Model.FollowingCount</div>
+                    <div class="">following</div>
+                </a>
+            </div>
+            <div class="bio my-4">
+                @Model.Bio
+            </div>
+            <div class="btns  d-flex justify-content-between align-items-center flex-column">
+                @if (Model.IsCurrentUser)
+                {
+                    <button id="EditProfileBtn" class="edit w-100">Edit Profile</button>
+                    <button id="changePasswordBtn" class="change w-100 mt-3">Change Password</button>
+                }
+                else
+                {
+                <button id="FollowProfileBtn" class="follow w-100" data-id="@Model.UserId">@(Model.IsFollowing ? "Unfollow" : "Follow")</button>
+                <button id="ReportProfileBtn" class=" reportUser w-100 mt-3" data-id="@Model.UserId">Report</button>
+                }
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "ReciveEmail";
+}
+@section Style {
+    <link rel="stylesheet" href="~/css/StyleMessage.css" />
+}
+<section class="page">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="content d-flex align-items-center justify-content-between flex-column p-4 w-50">
+                <div class="title fs-3">You Successfully Recive an Email</div>
+                <a asp-action="Signin" asp-controller="Accounts">Sign in</a>
+        </div>
+        <div class="img w-50 p-4">
+                <img src="~/Images/Account/success.png" class="w-75" />
+            </div>
+    </div>
+</section>
+
+

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<UserViewModel>
+        @if (Model.Any())
+        {
+            @foreach (var user in Model)
+            {
+                <div class="card">
+                    <a asp-area="User" asp-controller="Users" asp-action="Profile" asp-route-UserId="@user.UserId" class="d-flex align-items-center justify-content-start">
+                        <div class="img me-2">
+                            @if (user.HavePicture)
+                            {
+                                <img src="~/Files/Images/@user.UserProfilePictureUrl" alt="User Picture" />
+                            }
+                            else
+                            {
+                                <div class="content text-uppercase">@user.UserProfilePictureUrl</div>
+                            }
+                        </div>
+                        <div class="name text-capitalize">@user.UserName</div>
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+                <div class="NoResult">No Result Found</div>
+        }

@@ -1,0 +1,46 @@
+﻿header {
+    height: 60px; /* Set this to your navbar height */
+}
+ul{
+    list-style-type: none;
+}
+ul li{
+    padding: 15px  20px;
+    background: #2394f070;
+    border-bottom: 5px solid #fff;
+    border-radius: 10px;
+}
+.container {
+    position: relative;
+    top: -30px;
+    bottom: 40px;
+}
+.main{
+    width: 70%!important;
+}
+.sidemenu {
+    position: fixed;
+    height: calc(100vh - 125px);
+    overflow-y: auto;
+    padding-top: 50px;
+    right: 40px;
+    top: 50px;
+    bottom: 0px;
+}
+.search {
+    padding: 10px 30px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px #2394f070 solid;
+}
+.search i,
+.search span {
+    color: #2394f0;
+}
+.search i {
+    font-size: 16px;
+    color: #2394f0;
+    margin-right: 20px;
+}

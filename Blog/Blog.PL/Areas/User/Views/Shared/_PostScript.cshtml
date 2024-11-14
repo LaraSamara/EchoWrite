@@ -1,0 +1,517 @@
+﻿<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@* Delete Post *@
+<script>
+$(document).ready(function () {
+    // Attach a click event listener to delete buttons
+    $('.delete').on('click', function (event) {
+        event.preventDefault();
+        const postId = $(this).data('id'); // Get the post ID from data attribute
+
+        // Check if postId is properly retrieved
+        if (!postId) {
+            // console.error('Post ID not found.');
+            return;
+        }
+
+        // Show confirmation alert
+        Swal.fire({
+            title: 'Are you sure You want to delete the Post?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Proceed with the AJAX call to delete the post
+                $.ajax({
+                    url: `/User/Posts/DeletePost/${postId}`, // Change to your delete endpoint
+                    type: 'Post', // Use DELETE method
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire('Deleted!', response.message, 'success');
+                            $(`#post[data-id="${postId}"]`).remove();
+                            // Optionally, remove the post from the DOM
+                        } else {
+                            Swal.fire('Error', response.errors.join(', '), 'error');
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
+
+@* Update Post *@
+<script>
+$(document).ready(function () {
+// Attach click event to the Edit button with ID "edit"
+$('.edit').on('click', function (event) {
+    event.preventDefault(); // Prevent default button behavior
+    const postId = $(this).data('id');
+
+    // Check if postId is properly retrieved
+    if (!postId) {
+        console.error('Post ID not found.');
+        return;
+    }
+
+    // AJAX call to load the update form
+    $.ajax({
+        url: `/User/Posts/UpdatePost/${postId}`, // Replace with your actual URL
+        type: 'GET',
+        success: function (html) {
+            // Display the form in a Swal modal
+            Swal.fire({
+                html: html,
+                showCancelButton: true,
+                confirmButtonText: 'Update Post',
+                width: '600px',
+                focusConfirm: false,
+                preConfirm: () => {
+                    const PostForm = $('#UpdatePostForm'); // Ensure form ID matches
+
+                    // Check if the form exists in the loaded HTML
+                    if (PostForm.length === 0) {
+                        Swal.showValidationMessage('Form not found!');
+                        return false; // Stop the preConfirm
+                    }
+
+                    const formData = PostForm.serialize(); // Serialize form data
+
+                    // AJAX call to submit the update form
+                    return $.ajax({
+                        url: '/User/Posts/UpdatePost', // Replace with your actual POST URL
+                        type: 'POST',
+                        data: formData,
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire('Updated!', response.message, 'success');
+                                // Optionally update post content on the page without reload
+                                // $(`#post-content-${postId}`).text(response.updatedContent);
+                            } else {
+                                Swal.fire('Error', response.errors.join(', '), 'error');
+                            }
+                        },
+                        error: function () {
+                            Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                        }
+                    });
+                }
+            });
+        },
+        error: function () {
+            Swal.fire('Error', 'Failed to load the edit form.', 'error');
+        }
+    });
+});
+});
+</script>
+
+@* Report Post *@
+<script>
+    $(document).ready(function () {
+        // Attach click event to the Edit button with ID "edit"
+        $('.report').on('click', function (event) {
+            event.preventDefault(); // Prevent default button behavior
+            const postId = $(this).data('id');
+            // Check if postId is properly retrieved
+            if (!postId) {
+                // console.error('Post ID not found.');
+                return;
+            }
+
+            // AJAX call to load the update form
+            $.ajax({
+                url: `/User/Posts/ReportPost/${postId}`, // Replace with your actual URL
+                type: 'GET',
+                success: function (html) {
+                    // Display the form in a Swal modal
+                    Swal.fire({
+                        html: html,
+                        showCancelButton: true,
+                        confirmButtonText: 'Report Post',
+                        width: '600px',
+                        focusConfirm: false,
+                        preConfirm: () => {
+                            const PostForm = $('#ReportePostForm'); // Ensure form ID matches
+
+                            // Check if the form exists in the loaded HTML
+                            if (PostForm.length === 0) {
+                                Swal.showValidationMessage('Form not found!');
+                                return false; // Stop the preConfirm
+                            }
+
+                            const formData = PostForm.serialize(); // Serialize form data
+                            // AJAX call to submit the update form
+                            return $.ajax({
+                                url: '/User/Posts/ReportPost', // Replace with your actual POST URL
+                                type: 'POST',
+                                data: formData,
+                                success: function (response) {
+                                    if (response.success) {
+                                        Swal.fire('Reported!', response.message, 'success');
+                                        // Optionally update post content on the page without reload
+                                        // $(`#post-content-${postId}`).text(response.updatedContent);
+                                    } else {
+                                        Swal.fire('Error', response.errors.join(', '), 'error');
+                                    }
+                                },
+                                error: function () {
+                                    Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                                }
+                            });
+                        }
+                    });
+                },
+                error: function () {
+                    Swal.fire('Error', 'Failed to load the edit form.', 'error');
+                }
+            });
+        });
+    });
+</script>
+
+@* Like/UnLike Post *@
+<script>
+$(document).ready(function () {
+        $('.like').on('click', function (event) {
+        event.preventDefault();
+        const postId = $(this).data('id');
+        const heartIcon = $(this).find('i'); // Get the heart icon
+        const isLiked = heartIcon.hasClass('fas'); // Check if it's a solid heart
+        // Check if postId is properly retrieved
+        if (!postId) {
+            // console.error('Post ID not found.');
+            return;
+        }
+        const url = isLiked ? `/User/Posts/UnlikePost/${postId}` : `/User/Posts/LikePost/${postId}`;
+        const data = { postId: postId };
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    $(`#like-count-${postId}`).text(response.likeCount);
+                    // Toggle the heart icon class
+                    if (isLiked) {
+                            heartIcon.removeClass('fas text-danger').addClass('far'); // Change to outline heart
+                            Swal.fire('UnLikes!', response.message, 'success');
+                    } else {
+                        heartIcon.removeClass('far').addClass('fas text-danger'); // Change to solid heart
+                            Swal.fire('Likes!', response.message, 'success');
+                    }
+                } else {
+                        Swal.fire('Error', response.errors.join(', '), 'error');
+                }
+            },
+            error: function () {
+                    Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+            }
+        });
+    });
+});
+</script>
+
+@*  Show Post Likes *@
+<script>
+    $(document).ready(function () {
+        $('.view-likes').on('click', function (event) {
+            event.preventDefault();
+            const postId = $(this).data('id');
+
+            // AJAX call to get the list of users who liked the post
+            $.ajax({
+                url: `/User/Posts/GetPostLikes/${postId}`,
+                type: 'GET',
+                success: function (response) {
+                    // Create a scrollable alert using SweetAlert2 or a custom modal
+                    Swal.fire({
+                        html: response, // Response should be the partial view with user details
+                        width: '600px',
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                        scrollbarPadding: false,
+                        heightAuto: false, // Ensure alert fits with scrollable content
+                    });
+                },
+                error: function () {
+                    Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                }
+            });
+        });
+    });
+</script>
+
+@* Create Comment *@
+<script>
+    $(document).ready(function () {
+        const commentButtons = document.querySelectorAll('.comment');
+
+        commentButtons.forEach((button) => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                const postId = button.dataset.id;
+
+                // AJAX call to get the comment form
+                $.ajax({
+                    url: `/User/Comments/CreateComment/${postId}`,
+                    type: 'GET',
+                    success: function (html) {
+                        // Display the comment form in a SweetAlert2 modal
+                        Swal.fire({
+                            html: html, // Use the returned HTML from the partial view
+                            showCancelButton: true,
+                            confirmButtonText: 'Create Comment',
+                            width: '600px',
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                const commentForm = $('#addCommentForm'); // Make sure this matches your form ID
+
+                                if (commentForm.length === 0) {
+                                    Swal.showValidationMessage('Form not found!');
+                                    return;
+                                }
+
+                                const formData = commentForm.serialize();
+                                return $.ajax({
+                                    url: '/User/Comments/CreateComment', // Update with the correct URL
+                                    type: 'POST',
+                                    data: formData,
+                                    success: function (response) {
+                                        console.log(response);
+                                        if (response.success) {
+                                            Swal.fire('Success', 'Your comment has been added!', 'success');
+                                            $(`#Comment-count-${postId}`).text(response.commentsCount);
+                                        } else {
+                                            Swal.fire('Error', response.message || 'Failed to add comment.', 'error');
+                                        }
+                                    },
+                                    error: function () {
+                                        Swal.fire('Error', 'An error occurred while submitting your comment.', 'error');
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    error: function () {
+                        Swal.fire('Error', 'An error occurred while loading the comment form. Please try again.', 'error');
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+
+@* Comments *@
+<script>
+    $(document).ready(function () {
+        $('.show-comments').on('click', function (event) {
+            event.preventDefault();
+            const postId = $(this).data('id');
+
+            // Function to display comments in SweetAlert
+            function showCommentsAlert() {
+                $.ajax({
+                    url: `/User/Comments/GetPostComments/${postId}`,
+                    type: 'GET',
+                    success: function (response) {
+                        // Show comments in a SweetAlert modal
+                        Swal.fire({
+                            html: response, // Expecting partial view with comments HTML
+                            // title: "All Comments",
+                            width: '600px',
+                            height: '600px',
+                            showCloseButton: true,
+                            showConfirmButton: false,
+                            scrollbarPadding: false,
+                            heightAuto: false,
+                            didOpen: () => {
+                                // Attach delete event handler to each comment's delete button
+                                $('.delete-comment').on('click', function () {
+                                    const commentId = $(this).data('id');
+                                    showDeleteCommentConfirmation(commentId, postId); // Pass postId to reload comments after deletion
+                                });
+                                $('.edit-comment').on('click', function () {
+                                    const commentId = $(this).data('id');
+                                    ShowUpdateCommentAlert(commentId, postId); // Pass postId to reload comments after deletion
+                                });
+                                $('.report-comment').on('click', function () {
+                                    const commentId = $(this).data('id');
+                                    ShowReportCommentAlert(commentId); // Pass postId to reload comments after deletion
+                                });
+                            }
+                        });
+                    },
+                    error: function () {
+                        Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                    }
+                });
+            }
+
+            // Function to show delete confirmation alert
+            function showDeleteCommentConfirmation(commentId, postId) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'Do you really want to delete this comment?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `/User/Comments/Delete/${commentId}`,
+                            type: 'POST',
+                            success: function (response) {
+                                if (response.success) {
+                                    console.log(response.commentsCount);
+                                    $(`#Comment-count-${postId}`).text(response.commentsCount);
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Deleted!',
+                                        text: 'The comment has been deleted.',
+                                        position: 'top-end',
+                                        toast: true,
+                                        timer: 1500,
+                                        showConfirmButton: false,
+                                    }).then(() => {
+                                        // Reopen the comments alert after successful deletion
+                                        showCommentsAlert();
+                                    });
+                                } else {
+                                    Swal.fire('Error', response.message || 'Failed to delete the comment.', 'error');
+                                }
+                            },
+                            error: function () {
+                                Swal.fire('Error', 'An error occurred while deleting the comment.', 'error');
+                            }
+                        });
+                    } else {
+                        // Reopen comments alert if deletion was canceled
+                        showCommentsAlert();
+                    }
+                });
+            }
+            // Function to show Update Alert
+            function ShowUpdateCommentAlert(commentId, postId) {
+                // First, get and display the "Show Comments" alert
+                $.ajax({
+                    url: `/User/Comments/UpdateComment/${commentId}`,
+                    type: 'GET',
+                    success: function (html) {
+                        // Display the comment form in a SweetAlert2 modal
+                        Swal.fire({
+                            html: html, // Use the returned HTML from the partial view
+                            confirmButtonText: 'Update Comment',
+                            showCancelButton: true,
+                            width: '600px',
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                const PostForm = $('#UpdateCommentForm'); // Ensure form ID matches
+
+                                // Check if the form exists in the loaded HTML
+                                if (PostForm.length === 0) {
+                                    Swal.showValidationMessage('Form not found!');
+                                    return false; // Stop the preConfirm
+                                }
+
+                                const formData = PostForm.serialize(); // Serialize form data
+
+                                // AJAX call to submit the update form
+                                return $.ajax({
+                                    url: '/User/Comments/UpdateComment', // Replace with your actual POST URL
+                                    type: 'POST',
+                                    data: formData,
+                                    success: function (response) {
+                                        if (response.success) {
+                                            Swal.fire('Updated!', response.message, 'success')
+                                                .then(() => {
+                                                    // After the comment is updated, reopen the "Show Comments" alert
+                                                    showCommentsAlert(); // This will reopen the "Show Comments" SweetAlert
+                                                });
+                                        } else {
+                                            Swal.fire('Error', response.message, 'error');
+                                        }
+                                    },
+                                    error: function () {
+                                        Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                                    }
+                                });
+                            }
+                        }).then((result) => {
+                            // Reopen "Show Comments" alert even if the user clicks "Cancel"
+                            if (!result.isConfirmed) {
+                                showCommentsAlert();
+                            }
+                        });
+                    },
+                });
+            }
+            // Function to show Report Alert
+            function ShowReportCommentAlert(commentId) {
+                $.ajax({
+                    url: `/User/Comments/ReportComment/${commentId}`,
+                    type: 'GET',
+                    success: function (html) {
+                        // Display the comment form in a SweetAlert2 modal
+                        Swal.fire({
+                            html: html, // Use the returned HTML from the partial view
+                            confirmButtonText: 'Report  Comment',
+                            showCancelButton: true,
+                            width: '600px',
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                const PostForm = $('#ReportCommentForm'); // Ensure form ID matches
+
+                                // Check if the form exists in the loaded HTML
+                                if (PostForm.length === 0) {
+                                    Swal.showValidationMessage('Form not found!');
+                                    return false; // Stop the preConfirm
+                                }
+
+                                const formData = PostForm.serialize(); // Serialize form data
+
+                                // AJAX call to submit the update form
+                                return $.ajax({
+                                    url: '/User/Comments/ReportComment', // Replace with your actual POST URL
+                                    type: 'POST',
+                                    data: formData,
+                                    success: function (response) {
+                                        if (response.success) {
+                                            Swal.fire('Reported!', response.message, 'success')
+                                                .then(() => {
+                                                    // After the comment is updated, reopen the "Show Comments" alert
+                                                    showCommentsAlert(); // This will reopen the "Show Comments" SweetAlert
+                                                });
+                                        } else {
+                                            Swal.fire('Error', response.message, 'error');
+                                        }
+                                    },
+                                    error: function () {
+                                        Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                                    }
+                                });
+                            }
+                        }).then((result) => {
+                            // Reopen "Show Comments" alert even if the user clicks "Cancel"
+                            if (!result.isConfirmed) {
+                                showCommentsAlert();
+                            }
+                        });
+                    },
+                });
+            }
+
+            // Initially show the comments alert
+            showCommentsAlert();
+        });
+    });
+</script>

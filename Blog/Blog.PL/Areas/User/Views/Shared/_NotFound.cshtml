@@ -1,0 +1,18 @@
+﻿@model IEnumerable< PostViewModel>
+@{
+    ViewData["Title"] = "NoFollowers";
+    Layout = "~/Areas/User/Views/Shared/_UserLayout.cshtml";
+}
+@section UserStyle {
+        <link rel="stylesheet" href="~/css/StyleMessage.css" />
+}
+    <section class="page w-75">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-between flex-column p-4 w-50">
+                <div class="title">Follow other to Show news</div>
+            </div>
+            <div class="img w-50">
+                <img src="~/Images/Account/success.png" class="w-75" />
+            </div>
+        </div>
+    </section>

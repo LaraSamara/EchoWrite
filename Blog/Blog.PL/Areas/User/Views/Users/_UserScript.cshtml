@@ -1,0 +1,193 @@
+﻿@* Sweet Alert *@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@* Change Password Button *@
+<script>
+    const changePasswornBtn = document.querySelector("#changePasswordBtn");
+    $(document).ready(function () {
+        if (changePasswornBtn) {
+            changePasswornBtn.addEventListener("click", (event) => {
+                event.preventDefault();
+                $.ajax({
+                    url: '/User/Users/ChangePassword',
+                    type: 'GET',
+                    success: function (html) {
+                        Swal.fire({
+                            html: html,
+                            showCancelButton: true,
+                            confirmButtonText: 'Change Password',
+                            width: '600px',
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                const PostForm = $('#ChangePasswordForm'); // Make sure this matches your form ID
+
+                                if (PostForm.length === 0) {
+                                    Swal.showValidationMessage('Form not found!'); // Check if form exists
+                                    return;
+                                }
+                                const formData = PostForm.serialize();
+                                return $.ajax({
+                                    url: '/User/Users/ChangePassword',
+                                    type: 'POST',
+                                    data: formData,
+                                    success: function (response) {
+                                        if (response.success) {
+                                            Swal.fire('Success', response.message, 'success');
+                                        } else {
+                                            Swal.fire('Error', response.errors.join(', '), 'error');
+                                        }
+                                    },
+                                    error: function () {
+                                        Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        }
+    });
+    document.body.style.overflowY = 'scroll';
+</script>
+
+@* Edit profile Button *@
+<script>
+    const EditButton = document.querySelector("#EditProfileBtn");
+    if (EditButton) {
+        $(document).ready(function () {
+            EditButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                $.ajax({
+                    url: '/User/Users/EditProfile',
+                    type: 'GET',
+                    success: function (html) {
+                        Swal.fire({
+                            html: html,
+                            showCancelButton: true,
+                            confirmButtonText: 'Edit Profile',
+                            width: '600px',
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                const PostForm = $('#EditProfileForm'); // Make sure this matches your form ID
+
+                                if (PostForm.length === 0) {
+                                    Swal.showValidationMessage('Form not found!'); // Check if form exists
+                                    return;
+                                }
+                                const formData = new FormData(document.getElementById("EditProfileForm"));
+                                return $.ajax({
+                                    url: '/User/Users/EditProfile',
+                                    type: 'POST',
+                                    data: formData,
+                                    contentType: false, // Important for file upload
+                                    processData: false, // Important for file upload
+                                    success: function (response) {
+                                        if (response.success) {
+                                            Swal.fire('Success', response.message, 'success');
+                                        } else {
+                                            Swal.fire('Error', response.errors.join(', '), 'error');
+                                        }
+                                    },
+                                    error: function () {
+                                        Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    }
+    document.body.style.overflowY = 'scroll';
+</script>
+
+@* Follow Button *@
+<script>
+    const follower = document.querySelector("#followers-link .number");
+    const FollowButton = document.querySelector("#FollowProfileBtn");
+    if (FollowButton) {
+        $(document).ready(function () {
+            FollowButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                const userId = $(FollowButton).data('id');
+                $.ajax({
+                    url: `/User/Follows/ToggleFollow?UserId=${userId}`,
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.success) {
+                            if (response.following) {
+                                $(FollowButton).text('Unfollow').addClass('unfollow').removeClass('follow');
+                            } else {
+                                $(FollowButton).text('Follow').addClass('follow').removeClass('unfollow');
+                            }
+                            $(follower).text(response.followerCount);
+                        } else {
+                            Swal.fire('Error', response.message || 'An error occurred.', 'error');
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                    }
+                });
+            });
+        });
+    }
+
+</script>
+@* 
+Report User Button *@
+<script>
+    const reportButton = document.querySelector("#ReportProfileBtn");
+    if (reportButton) {
+        $(document).ready(function () {
+            reportButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                const userId = $(reportButton).data('id');
+                $.ajax({
+                    url: `/User/Users/ReportUser?Id=${userId}`,
+                    type: 'GET',
+                    success: function (html) {
+                        // Display the form in a Swal modal
+                        Swal.fire({
+                            html: html,
+                            showCancelButton: true,
+                            confirmButtonText: 'Report User',
+                            width: '600px',
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                const reportForm = $('#ReportUserForm'); // Ensure form ID matches
+                                const formData = reportForm.serialize(); // Serialize form data
+
+                                // Check if the form exists in the loaded HTML
+                                if (formData.length === 0) {
+                                    Swal.showValidationMessage('Form not found!');
+                                    return false; // Stop the preConfirm
+                                }
+                                // AJAX call to submit the update form
+                                return $.ajax({
+                                    url: `/User/Users/ReportUser`, // Replace with your actual POST URL
+                                    type: 'POST',
+                                    data: formData,
+                                    success: function (response) {
+                                        if (response.success) {
+                                            Swal.fire('Reported!', response.message, 'success');
+                                        } else {
+                                            Swal.fire('Error', response.message, 'error');
+                                        }
+                                    },
+                                    error: function () {
+                                        Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    error: function () {
+                        Swal.fire('Error', 'Failed to load the edit form.', 'error');
+                    }
+                });
+            });
+        });
+    }
+</script>

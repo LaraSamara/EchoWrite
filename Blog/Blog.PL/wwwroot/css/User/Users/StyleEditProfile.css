@@ -1,0 +1,70 @@
+﻿.main {
+    width: 70% !important;
+}
+section .heading {
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #2394f0, #99ccff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.form-input{
+    width: 100%;
+    margin: 15px 0;
+}
+.form-input input,
+section form textarea {
+    position: relative;
+    padding: 1rem;
+    text-align: center;
+    background: #2394f010;
+    color: #003366;
+    outline: none;
+    border: none;
+    padding-top: 0.6rem;
+    text-align: left;
+    line-height: 1.5;
+    width: 100%;
+}
+
+section form textarea {
+    resize: none;
+}
+label {
+    color: #2394f0;
+}
+.custom-scroll {
+    max-height: 400px;
+    overflow-y: scroll; /* Makes the content scrollable */
+    padding: 10px;
+}
+.swal2-confirm,
+.swal2-cancel {
+    padding: 10px;
+    border: none;
+    outline: none;
+    color: #fff;
+    transition: all ease 0.3s;
+}
+
+.swal2-confirm {
+    background: linear-gradient(45deg, #2394f0, #99ccff);
+}
+
+.swal2-cancel {
+    background: linear-gradient(45deg, #2394f0, #1e3a86);
+}
+
+.swal2-popup .swal2-confirm:hover,
+.swal2-popup .swal2-cancel:hover {
+    letter-spacing: 1px;
+}
+
+.swal2-popup .swal2-confirm:hover {
+    background: linear-gradient(45deg, #99ccff, #2394f0) !important;
+}
+
+.swal2-popup .swal2-cancel:hover {
+    background: linear-gradient(45deg, #1e3a86, #2394f0) !important;
+}

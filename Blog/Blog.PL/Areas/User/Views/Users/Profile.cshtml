@@ -1,0 +1,56 @@
+﻿@model ProfileViewModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Areas/User/Views/Shared/_UserLayout.cshtml";
+}
+@section UserStyle {
+    <link rel="stylesheet" href="~/css/User/Posts/StylePost.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/User/Users/StyleProfile.css" asp-append-version="true" />
+}
+<div class="pt-5"  id="editProfileModal">
+    @Html.Partial("_Profile", Model.Profile)
+
+    <section id="postFeed" class="posts d-flex align-items-start justify-content-center flex-column w-100 my-5">
+        @foreach (var post in Model.Posts)
+        {
+            @Html.Partial("~/Areas/User/Views/Shared/_Post.cshtml", post)
+        }
+    </section>
+
+</div>
+@section Scripts{
+    <partial name="_UserScript" />
+    <partial name="_PostScript" />
+    <partial name="~/Areas/User/Views/Shared/Follows/_FollowerFollowingScript.cshtml" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".category-link").forEach(function (link) {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const categoryId = $(this).data('id');
+                    console.log(categoryId);
+                    // const categoryId = this.getAttribute("data-id");
+                    filterPostsByCategory(categoryId);
+                });
+            });
+        });
+
+        function filterPostsByCategory(categoryId) {
+            $.ajax({
+                url: `/User/Users/FilterPosts`, 
+                type: 'GET',
+                data: { categoryId: categoryId },
+                success: function (result) {
+                    $("#postFeed").html(result);
+                },
+                error: function () {
+                    Swal.fire("Failed to load posts.");
+                }
+            });
+        }
+    </script>
+
+}
+
+

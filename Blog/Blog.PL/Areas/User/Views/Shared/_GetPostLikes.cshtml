@@ -1,0 +1,33 @@
+﻿@model IEnumerable<LikeViewModel>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Likes</title>
+    <link rel="stylesheet" href="~/css/User/Posts/StyleLike.css" asp-append-version="true" />
+</head>
+<body>
+    <section class="likes">
+        <div class="title">Users who liked this post</div>
+        @foreach(var like in Model)
+        {
+            <div class="card">
+                <a asp-area="User" asp-controller="Users" asp-action="Profile" asp-route-UserId="@like.UserId" class="d-flex align-items-center justify-content-start">
+                     <div class="img me-2">
+                    @if (like.HavePicture)
+                    {
+                    <img src="~/Files/Images/@like.UserProfilePictureUrl" alt="User Picture" />
+                    }
+                    else
+                    {
+                            <div class="content  text-uppercase">@like.UserProfilePictureUrl</div>
+                           }
+                    </div>
+                    <div class="name text-capitalize">@like.UserName</div>
+                </a>
+            </div>
+        }
+    </section>
+</body>
+</html>

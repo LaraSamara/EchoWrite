@@ -1,0 +1,118 @@
+﻿/*header*/
+.header {
+    background: #2394f020;
+    overflow: hidden;
+}
+.header .content .title {
+    font-size: 3.5rem;
+    font-weight: bolder;
+    color: #2394f0;
+}
+.header .content p{
+      color: #2394f0;
+      font-size: 1.3rem;
+}
+.btn {
+    background: #2394f0;
+    border: solid 2px #2394f0;
+    transition: all ease 0.3s;
+}
+.btn.first:hover{
+     color: #2394f0 !important;
+     background: #fff;
+}
+.btn.second{
+    color: #2394f0;
+}
+.btn.second:hover {
+    background: #2394f0 !important;
+    color: #fff!important;
+}
+.header .img{
+    width: 40%;
+}
+/*features*/
+.features-section {
+    width: 100%;
+    color: #2394f0;
+    margin: 4rem 0;
+}
+.features{
+    width: 100%;
+}
+.features .feature {
+    max-width: calc(20% - 15px);
+    border-radius: 20px;
+    border: 8px solid #2394f050;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+.features .feature img{
+    border-radius: 15px;
+}
+.feature .body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: -100%;
+    background: red;
+    border-radius: 10px;
+    background: #1f3d4738;
+    backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    color:   #003366f0;
+    transition: all ease 0.3s;
+}
+.feature:hover .body{
+    right: 0;
+}
+.feature .body h3 {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.feature .body p{
+    font-size: 14px;
+    font-weight: 500;
+    width: 80%;
+}
+/*inspire*/
+.inspire{
+    margin: 10rem 0;
+}
+.inspire .content {
+    position: relative;
+    padding: 1.5rem;
+    text-align: center;
+    color: #2394f0;
+}
+.inspire .content::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 5px solid; 
+    border-image-slice: 1;
+    border-image-source: linear-gradient(45deg, #2394f0, #99ccff); 
+    animation: gradientAnimation 1s ease-in-out infinite;
+
+}
+@keyframes gradientAnimation {
+    0% {
+        border-image-source: linear-gradient(45deg, #2394f0, #99ccff);
+    }
+
+    50% {
+        border-image-source: linear-gradient(45deg, #1e3a8a, #2394f0);
+    }
+
+    100% {
+        border-image-source: linear-gradient(45deg, #2394f0, #99ccff);
+    }
+}

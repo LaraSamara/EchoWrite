@@ -1,0 +1,36 @@
+﻿@model SigninViewModel;
+@{
+    ViewData["Title"] = "Signin";
+}
+
+@section Style{
+    <link rel="stylesheet" href="~/css/StyleForm.css" />
+}
+<section>
+    <div class="row  d-flex align-items-center justify-content-center">
+            <form class="w-50 d-flex align-items-center justify-content-between flex-column p-4" method="post" asp-action="Signin" asp-controller="Accounts">
+                <div class="title">Sign in</div>
+                <div class="input-field  d-flex align-items-start justify-content-center flex-column w-100">
+                    <label asp-for="Email">Email</label>
+                    <input asp-for= "Email" class="w-100" />
+                </div>
+                <div class="input-field d-flex align-items-start justify-content-center flex-column w-100">
+                    <label asp-for="Password">Password</label>
+                    <input  asp-for="Password" class="w-100"/>
+                    <div class="link"><a asp-action="ForgetPassword" asp-controller="Accounts">Forget Password</a></div>
+                </div>
+                <div class="form-group form-check mt-3 d-flex align-items-start justify-content-center flex-column w-100">
+                    <label asp-for="RememberMe" class="form-check-label">
+                        <input asp-for="RememberMe" class="form-check-input" type="checkbox" /> Remember Me
+                    </label>
+                 </div>
+                <div class="input-field w-100">
+                    <button type="submit" class="w-100">Sign in</button>
+                    <div class="link">Don't have an account?'<a asp-action="Signup" asp-controller="Accounts">Signup</a></div>
+                </div>
+            </form>
+            <div class="img w-50 p-4">
+                <img src="~/Images/Account/signin.png" class="w-75"/>
+            </div>
+        </div>
+</section>

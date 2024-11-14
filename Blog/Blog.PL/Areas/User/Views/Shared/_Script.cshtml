@@ -1,0 +1,97 @@
+﻿@* Sweet Alert *@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@* Add Post *@
+<script>
+    const PostButton = document.querySelector("#addPostBtn");
+    $(document).ready(function () {
+        PostButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            $.ajax({
+                url: '/User/Posts/CreatePostForm',
+                type: 'GET',
+                success: function (html) {
+                    Swal.fire({
+                        // title: 'Add Post',
+                        html: html,
+                        showCancelButton: true,
+                        confirmButtonText: 'Create Post',
+                        width: '600px',
+                        focusConfirm: false,
+                        preConfirm: () => {
+                            // const PostForm = document.querySelector("#addPostForm");
+                            const PostForm = $('#addPostForm'); // Make sure this matches your form ID
+
+                            if (PostForm.length === 0) {
+                                Swal.showValidationMessage('Form not found!'); // Check if form exists
+                                return;
+                            }
+                            const formData = PostForm.serialize();
+                            return $.ajax({
+                                url: '/User/Posts/CreatePost',
+                                type: 'POST',
+                                data: formData,
+                                success: function (response) {
+                                    if (response.success) {
+                                        Swal.fire('Success', response.message, 'success');
+                                        // location.reload();
+                                    } else {
+                                        Swal.fire('Error', response.errors.join(', '), 'error');
+                                    }
+                                },
+                                error: function () {
+                                    Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+@* Search User *@
+<script>
+    const SearchButton = document.querySelector(".search");
+    const searchAside = document.querySelector("aside#search");
+    const searchCloseButton = document.querySelector("aside#search .close-btn");
+    const SearchInput = document.querySelector("aside#search .search-input input");
+    const searchMenu = $("aside#search .searchMenu");
+
+    $(document).ready(function () {
+        // Show the search menu when the search button is clicked
+        SearchButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            searchAside.style.top = "0";
+        });
+
+        // Close the search menu when the close button is clicked
+        searchCloseButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            searchAside.style.top = "-600px";
+        });
+
+        // Handle input event: Trigger search when a character is added or removed
+        SearchInput.addEventListener("input", (event) => {
+            const query = event.target.value;  // Get the current input value
+            if (query.length > 0) { // Only search if there's input
+                searchResults(query);  // Call the function to search and update results
+            } else {
+                searchMenu.empty();  // Clear results if the input is empty
+            }
+        });
+        // Function to perform the AJAX request and update search results
+        function searchResults(query) {
+            $.ajax({
+                url: `/User/Users/SearchUsers?query=${query}`,  // URL to your server action
+                method: 'GET',
+                success: function (response) {
+                    // Update the search menu with the results
+                    searchMenu.html(response);
+                },
+                error: function (error) {
+                    console.error("Error fetching search results:", error);
+                }
+            });
+        }
+    });
+</script>

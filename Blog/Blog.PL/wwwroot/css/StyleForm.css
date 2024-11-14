@@ -1,0 +1,73 @@
+﻿.main {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+}
+section {
+    min-height: 80vh !important;
+}
+.row {
+    height: 100%;
+    margin: 3rem 0;
+    box-shadow: -1px -1px 10px rgba(0,0,0,0.5);
+    max-width: 60rem;
+    border-radius: 10px;
+}
+form .title {
+    line-height: 60px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2394f0;
+}
+form .input-field{
+    padding: 0!important;
+    width: calc(50% - 10px);
+}
+form .input-field input,
+form .input-field button{
+     background: #2394f020;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 0.4rem;
+}
+form .input-field input{
+    position: relative;
+    width: 100%;
+}
+form .input-field label,
+form .input-field button,
+.form-check{
+    color: #2394f0;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+form .input-field button{
+    box-sizing: border-box;
+    margin: 10px 0;
+    font-size: 1.2rem;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(35, 148, 240, 1), rgba(35, 148, 240, 0.5));
+    transition: all ease 0.3s;
+}
+form .input-field button:hover {
+    background: linear-gradient(rgba(35, 148, 240, 0.5), rgba(35, 148, 240, 1));
+    letter-spacing: 1px;
+}
+form .input-field .link{
+    font-size: 0.8rem;
+}
+form .input-field .link a{
+    color: #2394f0;
+    text-decoration: none;
+    transition: all ease 0.3s;
+}
+form .input-field .link a:hover{
+    text-decoration: underline;
+}
+section .img {
+    background: #2394f020;
+    border-radius: 0 10px 10px 0;
+}

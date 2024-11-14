@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rock+Salt&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html {
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    position: relative;
+    min-height: 100%;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+body {
+/*  margin-bottom: 60px;*/
+min-height: 100vh!important;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+/*Nav*/
+header, nav{
+    position: sticky !important;
+    top: 0;
+    width: 100%;
+    z-index: 100 !important;
+    margin-top: 0 !important;
+    max-height: 60px !important;
+    height: 100%!important;
+    margin: 0!important;
+    padding: 0!important;
+}
+.navbar-brand img {
+    width: 150px;
+}
+/*aside menu*/
+aside#menu {
+    position: fixed;
+    height: 100vh;
+    width: 250px;
+    top: 0;
+    left: 0;
+    z-index: 100000 !important;
+    background: #2394f070;
+    left: -250px;
+    transition: 0.6s ease;
+    transition-property: left;
+    backdrop-filter: blur(20px);
+}
+aside#search {
+    position: fixed;
+    height: 400px;
+    width: 400px;
+    margin-left: 100px;
+    overflow-y: auto;
+    right: 0;
+    top: -400px;
+    z-index: 100000 !important;
+    background: #fff;
+    transition: 0.6s ease;
+    transition-property: top;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+.close-btn {
+    position: absolute;
+    right: 0;
+    margin: 10px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+}
+.menu{
+    width: 100%;
+    margin-top: 2rem;
+}
+.menu .item{
+    position: relative;
+    cursor: pointer;
+    transition: all ease 0.3s;
+}
+.menu .item :hover{
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+.menu .item a,
+.menu .item form  button{
+    display: block;
+    font-size: 1.2rem;
+    color: #fff;
+    text-decoration: none;
+    line-height: 60px;
+    border-bottom: solid 1px #fff;
+    text-align: start;
+    padding: 5px 30px;
+}
+.menu .item form  button{
+    border: none;
+    outline: none;
+    width: 100%;
+    background: none;
+    border-bottom: solid 1px #fff;
+    margin-left: 0 !important;
+}
+/*.menu .item.top a{
+        border-top: solid 1px #fff;
+}*/
+.item .sub-menu a {
+    border: none;
+}
+.menu .item a i,
+.menu .item form button i {
+    margin-right: 15px;
+}
+.item a .dropdown {
+    position: absolute;
+    right: 0;
+    margin: 20px;
+    transition: transform 0.3s ease;
+}
+.item a .dropdown:hover{
+    box-shadow: none;
+}
+.dropdown.rotate {
+    transform: rotate(90deg); /* Rotate the arrow */
+}
+.item .sub-menu {
+    background: #2394f411;
+    height: 0; /* Initially hide submenu */
+    overflow: hidden; /* Hide overflow content */
+    transition: height 0.5s ease; /* Transition effect for height */
+}
+.menu .item a i{
+    color:#fff!important;
+}
+
+aside#search .head{
+    padding: 10px 20px 0 10px;
+}
+aside#search .head i{
+        color: #2394f0;
+}
+.searchMenu {
+    margin-top: 10px;
+}
+input#userSearch {
+    padding: 8px 60px 8px 20px;
+    border-radius: 20px;
+    border-color: #2394f070;
+    outline: none;
+}
+.searchMenu .card {
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #2394f0;
+}
+.searchMenu .card a{
+  padding: 5px;
+}
+.searchMenu .card .img {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #2394f0;
+    color: #fff;
+    padding: 1.6px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: #2394f0f9;
+}
+
+.searchMenu .card .img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #2394f070;
+    color: #fff;
+    border: solid 3px #fff;
+    object-fit: cover;
+}
+
+.searchMenu .card .img .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #2394f0;
+    color: #fff;
+    border: solid 3px #fff;
+}
+.NoResult {
+    text-align: center;
+    line-height: 300px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #2394f0;
+}
+/*Footer*/
+footer {
+    position: relative;
+    bottom: 0;
+    top: 0;
+    z-index: 100;
+    left: 0;
+    width: 100%;
+    font-family: "Rock Salt", cursive;
+    font-weight: 400;
+    font-size: 0.7rem !important;
+    font-style: normal;
+    line-height: 2rem !important;
+    max-height: 60px !important;
+    height: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2); /* Top shadow */
+    /*    padding: 1rem !important;*/
+}
+footer .container{
+    position: relative;
+    top: 0px;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+footer span {
+    color: white; /* Main text color */
+    text-shadow: -1px -1px 0 #2394f0, /* Top-left */
+    1px -1px 0 #2394f0, /* Top-right */
+    -1px 1px 0 #2394f0, /* Bottom-left */
+    1px 1px 0 #2394f0, /* Bottom-right */
+    0 0 2px #2394f0; /* Blur effect */
+}

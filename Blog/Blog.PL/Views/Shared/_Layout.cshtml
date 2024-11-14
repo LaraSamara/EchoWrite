@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EchoWrite</title>
+   @*  Font Awesome *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    @* Bootstrap *@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @* MVC css *@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Blog.PL.styles.css" asp-append-version="true" />
+    @* Custome css *@
+    @RenderSection("Style",required: false)
+</head>
+<body>
+    <header class="">
+        <nav class="navbar navbar-expand-sm  navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+            <div class=" container-fluid px-5">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/Layout/logo.png" /></a>
+                @RenderSection("Nav", required: false)
+            </div>
+        </nav>
+    </header>
+    <aside id="menu">
+        <div class="close-btn">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="menu">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <div class="item top">
+                    <a asp-action="Index" asp-controller="Home"><i class="fa-solid fa-house-user"></i> Home</a>
+                </div>
+                <div class="item">
+                    <a asp-action="Signup" asp-controller="Accounts"><i class="fa-solid fa-user-plus"></i>Signup</a>
+                </div>
+                <div class="item">
+                    <a asp-action="Signin" asp-controller="Accounts"><i class="fa-solid fa-hands"></i>Signin</a>
+                </div>
+            }
+            else
+            {
+                <div class="item">
+                    <a asp-action="Profile" asp-controller="Users" asp-area="User"><i class="fa-solid fa-house-user"></i>Profile</a>
+                </div>
+                <div class="item">
+                    <a asp-action="Home" asp-controller="Users" asp-area="User"><i class="fa-solid fa-house-lock"></i>Home</a>
+                </div>
+              @*<div class="item">
+                    <a href="">
+                        <i class="fa-solid fa-house-lock"></i>Profile
+                        @*  drop down *@
+                        @*  drop down arrow
+                        <i class="fas fa-angle-right dropdown"></i>
+                    </a>
+                    <div class="sub-menu">
+                        <a href="" class="sub-item">Profile</a>
+                        <a href="" class="sub-item">Profile</a>
+                    </div>
+                </div>
+                *@
+        <div class="item">
+                        <form asp-action="Signout" asp-controller="Accounts" asp-area="" method="post">
+                            <button ><i class="fa-solid fa-right-from-bracket"></i>Signout</button>
+                        </form>
+                    </div>
+            }
+          
+        </div>
+    </aside>
+    <aside id="search">
+        <div class="head d-flex align-items-center justify-content-between">
+            <div class ="search-input">
+                <input type="text" id="userSearch" placeholder="Search users..." />
+            </div>
+            <div class="close-btn">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="searchMenu">
+        </div>
+    </aside>
+    <main role="main" class="main w-100">
+            @RenderBody()
+    </main>
+
+    <footer class="d-flex align-items-center justify-content-center">
+        <div class="container d-flex align-items-center justify-content-center flex-column">
+            <span class="">  © 2024 EchoWrite. All rights reserved.</span>
+            <span class="">Privacy Policy</span>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        const logo = document.querySelector("nav a");
+        const aside = document.querySelector("aside#menu");
+        const closeButton = document.querySelector("aside#menu .close-btn");
+        const menuItems = document.querySelectorAll("aside#menu .menu .item > a");
+        const dropdownItems = document.querySelectorAll("aside#menu .item > a .dropdown");
+        logo.addEventListener("click", (event) => {
+            event.preventDefault();
+            aside.style.left = "0";
+        });
+        closeButton.addEventListener("click", () => {
+            aside.style.left = "-250px";
+        })
+        menuItems.forEach((item) => {
+            item.addEventListener("click", (event) => {
+                const dropDown = item.querySelector(".dropdown");
+                if (dropDown) {
+                    event.preventDefault();
+                    const subMenu = item.nextElementSibling; // Get the associated submenu
+                    if (subMenu.style.height === "0px" || subMenu.style.height === "") {
+                        // Open submenu
+                        subMenu.style.height = `${subMenu.scrollHeight}px`; // Set height to its natural height
+                        dropDown.classList.add("rotate");
+                    } else {
+                        // Close submenu
+                        subMenu.style.height = "0"; // Collapse submenu
+                        dropDown.classList.remove("rotate");
+                    }
+                }
+            });
+        });
+        // Hide submenus when clicking anywhere else
+        document.addEventListener("click", (event) => {
+            if (!aside.contains(event.target) && aside.style.left === "0") {
+                aside.style.left = "-250px"; // Hide sidebar when clicking outside
+            }
+        });
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

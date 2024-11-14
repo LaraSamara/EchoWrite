@@ -1,0 +1,20 @@
+﻿@model ReportCommentViewModel;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create comment</title>
+    <link rel="stylesheet" href="~/css/User/Posts/StyleCreatePost.css" asp-append-version="true" />
+</head>
+<body>
+    <section>
+        <div class="title text-center w-10">Report Comment</div>
+        <form class="d-flex align-items-start justify-content-center flex-column p-4 ReportCommentForm" id="ReportCommentForm">
+            <input asp-for="UserId" type="hidden" value="@Model.UserId" />
+            <input asp-for="CommentId" type="hidden" value="@Model.CommentId" />
+            <textarea class="w-100 my-3" placeholder="Why we want to report a comment" asp-for="Reason"></textarea>
+        </form>
+    </section>
+</body>
+</html>

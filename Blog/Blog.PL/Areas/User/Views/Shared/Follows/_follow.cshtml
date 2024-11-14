@@ -1,0 +1,17 @@
+﻿@model FollowViewModel
+    <div class="card">
+        <a asp-area="User" asp-controller="Users" asp-action="Profile" asp-route-UserId="@Model.UserId" class="d-flex align-items-center justify-content-start">
+            <div class="img me-2">
+                @if (Model.HavePicture)
+                {
+                    <img src="~/Files/Images/@Model.UserProfilePictureUrl" alt="User Picture" />
+                }
+                else
+                {
+                <div class="content  text-uppercase">@Model.UserProfilePictureUrl</div>
+                }
+            </div>
+            <div class="name">@Model.UserName</div>
+        </a>
+    </div>
+

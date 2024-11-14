@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@section Style{
+    <link rel="stylesheet" href="~/css/Home/StyleHome.css" />
+}
+@* header *@
+<div class="header">
+    <div class="d-flex align-items-center justify-content-around">
+        <div class="content">
+            <div class="title">Welcome to <br/> EchoWrite</div>
+            <p>Discover, Share, and Engage with Amazing Content</p>
+            <div class="btns d-flex align-items-center justify-content-start">
+                <a class="btn text-white first" asp-action="Signup" asp-controller="Accounts">Signup</a>
+                <a class="btn bg-white mx-4 second" asp-action="Signin" asp-controller="Accounts">Signin</a>
+            </div>
+        </div>
+        <div class="img">
+            <img src="~/Images/Home/header.png" class="w-100"/>
+        </div>
+    </div>
+</div>
+@* features *@
+<div class="features-section">
+    <div class="container">
+        <div class="title my-5 d-flex align-items-center justify-content-end flex-column">
+            <h2 class="fs-1 fw-bold">Features</h2>
+            <p class="fw-light">What EchoWrite can offer</p>
+        </div>
+        <div class="features d-flex align-items-center justify-content-evenly w-100">
+            @*         Interactive Community *@
+            <div class="feature">
+                <img src="~/Images/Home/f1.png" class="w-100 h-100" />
+                <div class="body">
+                    <h3>Interactive Community</h3>
+                    <p>Readers can interact with authors and other users</p>
+                </div>
+            </div>
+            @*      Security & Trust *@
+            <div class="feature">
+                <img src="~/Images/Home/f2.png" class="w-100 h-100" />
+                <div class="body">
+                    <h3>Security & Trust</h3>
+                    <p>Your data is protected with the latest security measures</p>
+                </div>
+            </div>
+@*             Free to Use
+ *@            <div class="feature">
+                <img src="~/Images/Home/f3.png" class="w-100 h-100" />
+                <div class="body">
+                    <h3>Free to Use</h3>
+                    <p>All features are accessible without any hidden charges</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* Inspire*@
+<div class="inspire">
+    <div class="container">
+        <div class="content d-flex align-items-center justify-content-center flex-column">
+            <span>Whether you're here to read, write, or manage, we invite you to explore and enjoy everything EchoWrite has to offer. </span>
+            <span>If you're new, feel free to sign up and become a part of our growing community!</span>
+        </div>
+    </div>
+</div>

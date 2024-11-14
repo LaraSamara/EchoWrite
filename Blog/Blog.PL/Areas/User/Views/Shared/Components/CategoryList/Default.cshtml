@@ -1,0 +1,11 @@
+﻿@model IEnumerable<CategoryViewModel>
+
+<div class="sidemenu w-25">
+    <ul class="w-100 d-flex flex-column align-content-start justify-content-around">
+        <a href="#" class="category-link" data-id="0"><li>All</li></a>
+        @foreach (var category in Model)
+        {
+            <a href="#" class="category-link"  data-id="@category.Id"><li>@category.Name</li></a>
+        }
+    </ul>
+</div>

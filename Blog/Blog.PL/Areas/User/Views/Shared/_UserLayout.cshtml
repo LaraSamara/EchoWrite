@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = @ViewData["UserTitle"];
+}
+@section Style{
+       @*Font awesome*@
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/> 
+       @* Sweet Alert *@
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+       @* User Layout CSS *@
+    <link rel="stylesheet" href="~/css/User/UserLayoutSheet.css" asp-append-version="true" />
+       @* Custome User css *@
+       @RenderSection("UserStyle", required: false)
+}
+@section Nav{
+    <div class="right d-flex align-items-center justify-content-evenly">
+        <a class="search me-4"><i class="fa-solid fa-magnifying-glass"></i><span>Search on EchoWrite...</span></a>
+        <div class="AddPost">
+            <a id="addPostBtn"><i class="fa-regular fa-square-plus"></i></a>
+        </div>
+    </div>
+}
+<div class="container mt-3 d-flex align-items-start justify-content-between ">
+        <div class="main w-75">
+            @RenderBody()
+        </div>
+
+        @await Component.InvokeAsync("CategoryList")
+    </div>
+
+@section Scripts{
+    <partial name="_Script" />
+    @await RenderSectionAsync("Scripts", required: false)
+
+}
+
+

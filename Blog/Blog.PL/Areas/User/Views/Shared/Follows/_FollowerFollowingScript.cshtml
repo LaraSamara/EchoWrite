@@ -1,0 +1,39 @@
+﻿<script>
+    $(document).ready(function () {
+        // Function to show followers or following in a SweetAlert modal
+        function showAlert(url) {
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (response) {
+                    Swal.fire({
+                        html: response, // Response should be the partial view with followers or following details
+                        width: '600px',
+                        showCloseButton: true,
+                        showConfirmButton: false,
+                        scrollbarPadding: false,
+                        heightAuto: false,
+                    });
+                },
+                error: function () {
+                    Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+                }
+            });
+        }
+
+        // Event listener for followers link
+        $('#followers-link').on('click', function (event) {
+            event.preventDefault();
+            const userId = $(this).data('id');
+            console.log(userId);
+            showAlert(`/User/Follows/GetFollowers?Id=${userId}`); // Replace with your followers URL
+        });
+
+        // Event listener for following link
+        $('#following-link').on('click', function (event) {
+            event.preventDefault();
+            const userId = $(this).data('id');
+            showAlert(`/User/Follows/GetFollowing?Id=${userId}`); // Replace with your following URL
+        });
+    });
+</script>

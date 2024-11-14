@@ -1,0 +1,93 @@
+﻿
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #2394f0, #99ccff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+section .head .quotes {
+    color: #2394f0;
+    font-size: 0.8rem;
+}
+section form .user-info {
+    pointer-events: none;
+}
+section form .user-info .img {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #2394f0;
+    color: #fff;
+    padding: 1.6px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: #2394f0f9;
+}
+
+section form .user-info .img .content,
+section form .user-info .img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #2394f0;
+    border: solid 3px #fff;
+}
+section form .user-info .img .content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+      color: #fff;
+}
+section form .user-info .name{
+    color:#003366 ;
+}section form select,
+section form textarea {
+    position: relative;
+    padding: 1.5rem;
+    text-align: center;
+    background: #2394f010;
+    color: #003366;
+    outline: none;
+    border: none;
+    padding-top: 0.6rem;
+    text-align: left;
+    line-height: 1.5;
+}
+section form label {
+    color: #2394f0;
+}
+section form textarea {
+    resize: none;
+}
+section form textarea::placeholder{
+     color: #003366a1;
+     font-size: 0.8rem;
+}
+.swal2-confirm,
+.swal2-cancel {
+    padding: 10px;
+    border: none;
+    outline: none;
+    color: #fff;
+    transition: all ease 0.3s;
+}
+.swal2-confirm {
+    background: linear-gradient(45deg, #2394f0, #99ccff);
+}
+.swal2-cancel {
+    background: linear-gradient(45deg, #2394f0, #1e3a86);
+}
+.swal2-popup .swal2-confirm:hover,
+.swal2-popup .swal2-cancel:hover {
+    letter-spacing: 1px;
+}
+.swal2-popup .swal2-confirm:hover {
+    background: linear-gradient(45deg, #99ccff, #2394f0)!important;
+}
+.swal2-popup .swal2-cancel:hover {
+    background: linear-gradient(45deg, #1e3a86, #2394f0)!important;
+}

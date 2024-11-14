@@ -1,0 +1,23 @@
+﻿@model UserReportViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Post</title>
+    <link rel="stylesheet" href="~/css/User/Posts/StyleCreatePost.css" asp-append-version="true" />
+</head>
+<body>
+    <section>
+        <div class="head w-100 py-3">
+            <div class="title text-center w-10">Report User</div>
+        </div>
+        <form class="d-flex align-items-start justify-content-center flex-column p-4 ReportUserForm" id="ReportUserForm">
+            <input asp-for="ReporterId" type="hidden" />
+            <input asp-for="ReportedId" type="hidden" />
+            <label asp-for="Reason"></label>
+            <textarea class="w-100 my-3" asp-for="Reason"></textarea>
+        </form>
+    </section>
+</body>
+</html>

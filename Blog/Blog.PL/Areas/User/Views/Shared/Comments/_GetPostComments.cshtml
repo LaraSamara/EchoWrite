@@ -1,0 +1,69 @@
+﻿@model IEnumerable<GetCommentViewModel>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Likes</title>
+     <link rel="stylesheet" href="~/css/User/Posts/StyleLike.css" asp-append-version="true" />
+ @*     <link rel="stylesheet" href="~/css/User/Posts/StylePost.css" asp-append-version="true" />
+ *@</head>
+<body>
+    <section id="commentsContainer" class="comments-container">
+        <div class="title">All Comments</div>
+        @foreach (var item in Model)
+        {
+            <a asp-area="User" asp-controller="Users" asp-action="Profile" asp-route-UserId="@item.UserId" class="d-flex align-items-center justify-content-start">
+                <div class="post d-flex align-items-stretch justify-content-center flex-column my-4 p-3">
+                    <div class="head d-flex align-items-center justify-content-between w-100">
+                        <div class="left d-flex align-items-center justify-content-strat">
+                            <div class="img me-2">
+                                @if (item.HavePicture)
+                                {
+                                    <img src="~/Files/Images/@item.UserProfilePictureUrl" alt="User Picture" />
+                                }
+                                else
+                                {
+                                    <div class="content  text-uppercase">@item.UserProfilePictureUrl</div>
+                                }
+                            </div>
+                            <div class="text">
+                                <div class="name text-capitalize">@item.UserName</div>
+                                @if (item.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss") == item.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss"))
+                                {
+                                    <div class="date">
+                                        <span>Created @item.CreatedAt</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="date">
+                                        <span>Updated @item.UpdatedAt </span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="right text-capitalize d-flex flex-column  justify-content-center align-items-center">
+                            <div class="btns">
+                                @if (item.IsCurrentUser)
+                                {
+                                    <a id="delete-comment" class="delete-comment me-2" data-id="@item.Id"><i class="fa-regular fa-trash-can"></i></a>
+                                    <a id="edit-comment" class="edit-comment" data-id="@item.Id"><i class="fa-regular fa-pen-to-square"></i></a>
+                                }
+                                else
+                                {
+                                    <a id="report-comment" class="report-comment" data-id="@item.Id"><i class="fa-regular fa-flag"></i></a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body w-100 my-3  d-flex align-items-center justify-content-start text-start">
+                        <p>@item.Content</p>
+                    </div>
+                </div>
+            </a>
+   
+        }
+    </section>
+</body>
+</html>

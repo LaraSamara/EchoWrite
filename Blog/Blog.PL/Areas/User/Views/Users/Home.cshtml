@@ -1,0 +1,44 @@
+﻿@model IEnumerable< PostViewModel>
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Areas/User/Views/Shared/_UserLayout.cshtml";
+}
+@section UserStyle {
+    <link rel="stylesheet" href="~/css/User/Posts/StylePost.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/StyleMessage.css" />
+}
+    <section id="postFeed" class="page posts d-flex align-items-start justify-content-center flex-column w-75 my-5">
+        @foreach (var post in Model)
+        {
+            @Html.Partial("~/Areas/User/Views/Shared/_Post.cshtml", post)
+        }
+    </section>
+@section Scripts{
+    <partial name="~/Areas/User/Views/Shared/_PostScript.cshtml" />
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".category-link").forEach(function (link) {
+                link.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const categoryId = $(this).data('id');
+                    // const categoryId = this.getAttribute("data-id");
+                    filterPostsByCategory(categoryId);
+                });
+            });
+        });
+
+        function filterPostsByCategory(categoryId) {
+            $.ajax({
+                url: `/User/Users/FilterHomePosts`, // Update with actual controller if needed
+                type: 'GET',
+                data: { categoryId: categoryId },
+                success: function (result) {
+                    $("#postFeed").html(result);
+                },
+                error: function () {
+                    Swal.fire("Failed to load posts.");
+                }
+            });
+        }
+    </script>
+}

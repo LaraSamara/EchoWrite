@@ -1,0 +1,116 @@
+﻿.post {
+    position: relative;
+    padding: 1.5rem;
+    text-align: center;
+    background: #2394f010;
+    color: #2394f0;
+    color: #003366;
+    overflow: hidden;
+    width: 100%!important;
+}
+
+.post::before {
+    content: '';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border: 5px solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(45deg, #2394f0, #99ccff);
+    animation: gradientAnimation 1s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        border-image-source: linear-gradient(45deg, #2394f0, #99ccff);
+    }
+
+    50% {
+        border-image-source: linear-gradient(45deg, #1e3a8a, #2394f0);
+    }
+
+    100% {
+        border-image-source: linear-gradient(45deg, #2394f0, #99ccff);
+    }
+}
+
+.head .left .img {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: #2394f0;
+    color: #fff;
+    padding: 1.6px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: #2394f0f9;
+}
+.head .left .img  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #2394f070;
+    color: #fff;
+    border: solid 3px #fff;
+    object-fit: cover;
+}
+.head .left .img .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #2394f0;
+    color: #fff;
+    border: solid 3px #fff;
+}
+
+.head .left .text .date {
+    font-size: 0.8rem;
+}
+ a {
+    position: relative;
+    cursor: pointer;
+    z-index: 2;
+}
+
+a i {
+    color: #003366;
+    cursor: pointer!important;
+}
+
+.swal2-confirm,
+.swal2-cancel {
+    padding: 10px;
+    border: none;
+    outline: none;
+    color: #fff;
+    transition: all ease 0.3s;
+}
+
+.swal2-confirm {
+    background: linear-gradient(45deg, #2394f0, #99ccff);
+}
+
+.swal2-cancel {
+    background: linear-gradient(45deg, #2394f0, #1e3a86);
+}
+
+.swal2-popup .swal2-confirm:hover,
+.swal2-popup .swal2-cancel:hover {
+    letter-spacing: 1px;
+}
+
+.swal2-popup .swal2-confirm:hover {
+    background: linear-gradient(45deg, #99ccff, #2394f0) !important;
+}
+
+.swal2-popup .swal2-cancel:hover {
+    background: linear-gradient(45deg, #1e3a86, #2394f0) !important;
+}
