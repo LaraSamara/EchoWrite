@@ -26,7 +26,7 @@ $(document).ready(function () {
             if (result.isConfirmed) {
                 // Proceed with the AJAX call to delete the post
                 $.ajax({
-                    url: `/User/Posts/DeletePost/${postId}`, // Change to your delete endpoint
+                        url: `/User/Posts/DeletePost?Id=${postId}`, // Change to your delete endpoint
                     type: 'Post', // Use DELETE method
                     success: function (response) {
                         if (response.success) {

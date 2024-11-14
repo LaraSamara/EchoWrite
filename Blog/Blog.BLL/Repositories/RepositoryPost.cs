@@ -47,14 +47,20 @@ namespace Blog.BLL.Repositories
                 .Include(p => p.PostLikes).Include(p => p.Comments).ToList(); 
         }
 
-        public IEnumerable<Post> GetUserPosts(string UserId)
+        //public IEnumerable<Post> GetUserPosts(string UserId)
+        //{
+        //    var posts = _context.Posts.Include(p => p.Category).Include(p => p.User).Where(p => p.UserId == UserId).OrderByDescending(p => p.CreatedAt).ToList();
+        //    return posts;
+        //}
+        public IEnumerable<Post> GetUserPostsFilterByCategory(string UserId, int? CategoryId)
         {
-            var posts = _context.Posts.Include(p => p.Category).Include(p => p.User).Where(p => p.UserId == UserId).OrderByDescending(p => p.UpdatedAt).ToList();
-            return posts;
-        }
-        public IEnumerable<Post> GetUserPostsFilterByCategory(int CategoryId, string UserId)
-        {
-            return _context.Posts.Where(p => p.CategoryId == CategoryId && p.UserId == UserId).Include(p => p.User).Include(p => p.Category).ToList();
+            var query = _context.Posts.Include(p => p.Category).Include(p => p.User).Where(p => p.UserId == UserId).OrderByDescending(p => p.CreatedAt).ToList();
+            if (CategoryId.HasValue)
+            {
+                return query.Where(p => p.CategoryId == CategoryId.Value );
+
+            }
+            return query;
         }
         public int Update(Post post)
         {

@@ -89,7 +89,7 @@ namespace Blog.PL.Areas.User.Controllers
                 FollowersCount = userProfile.Followers.Count(),
                 FollowingCount = userProfile.Following.Count(),
             };
-            var Posts = _postRepo.GetUserPosts(UserId);
+            var Posts = _postRepo.GetUserPostsFilterByCategory(UserId, null);
             var PostsVM = Posts.Select(post => new PostViewModel
             {
                 UserId = post.UserId,
@@ -114,18 +114,21 @@ namespace Blog.PL.Areas.User.Controllers
             return View(ProfileVM);
         }
         [HttpGet]
-        public IActionResult FilterPosts(int CategoryId)
+        public IActionResult FilterPosts(int CategoryId, string UserId)
         {
-            var currentUser = _userManager.GetUserId(User);
+            Console.WriteLine("==========================================");
+            Console.WriteLine(UserId);
+            Console.WriteLine(CategoryId);
+            Console.WriteLine("==========================================");
             IEnumerable<Post> posts;
 
             if (CategoryId == 0) // "All" selected
             {
-                posts = _postRepo.GetUserPosts(currentUser);
+                posts = _postRepo.GetUserPostsFilterByCategory(UserId, null);
             }
             else
             {
-                posts = _postRepo.GetUserPostsFilterByCategory(CategoryId, currentUser);
+                posts = _postRepo.GetUserPostsFilterByCategory(UserId, CategoryId);
             }
             var postsVM = posts.Select(post => new PostViewModel
             {
@@ -133,15 +136,15 @@ namespace Blog.PL.Areas.User.Controllers
                 PostId = post.Id,
                 UserName = $"{post.User.FirstName} {post.User.LastName}",
                 HavePicture = post.User.ProfilePicture != null,
-                UserProfilePictureUrl = post.User.ProfilePicture ?? $"{post.User.FirstName[0]}{post.User.LastName[0]}",
+                UserProfilePictureUrl = post.User.ProfilePicture?? $"{post.User.FirstName[0]}{post.User.LastName[0]}",
                 CategoryName = post.Category.Name,
                 Content = post.Content,
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt,
                 LikeCount = _postLikeRepo.PostLikesCount(post.Id),
-                CommentCount = post.Comments.Count,
-                IsCurrentUser = currentUser == post.UserId,
-                IsLiked = _postLikeRepo.GetByUserAndPost(post.Id, currentUser) != null,
+                CommentCount = _commentRepo.GetPostCommentsCount(post.Id),
+                IsCurrentUser = UserId == post.UserId,
+                IsLiked = _postLikeRepo.GetByUserAndPost(post.Id, UserId) != null,
             });
 
             return PartialView("~/Areas/User/Views/Shared/Posts/_PostFiltered.cshtml", postsVM);
@@ -342,7 +345,7 @@ namespace Blog.PL.Areas.User.Controllers
                 CreatedAt = post.CreatedAt,
                 UpdatedAt = post.UpdatedAt,
                 LikeCount = _postLikeRepo.PostLikesCount(post.Id),
-                CommentCount = post.Comments.Count,
+                CommentCount = _commentRepo.GetPostCommentsCount(post.Id),
                 IsCurrentUser = currentUser == post.UserId,
                 IsLiked = _postLikeRepo.GetByUserAndPost(post.Id, currentUser) != null,
             });

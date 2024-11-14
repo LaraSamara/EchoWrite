@@ -13,8 +13,8 @@ namespace Blog.BLL.Interfaces
         public int Update(Post post);
         public int Delete(Post post);
         public Post Get(int id);
-        public IEnumerable<Post> GetUserPosts(string UserId);
-        public IEnumerable<Post> GetUserPostsFilterByCategory(int CategoryId, string UserId);
+        //public IEnumerable<Post> GetUserPosts(string UserId);
+        public IEnumerable<Post> GetUserPostsFilterByCategory(string UserId, int? CategoryId);
         IEnumerable<Post> GetFollowingPosts(IEnumerable<string> FollowingIds, int? categoryId);
         public IEnumerable<Post> GetAll();
     }

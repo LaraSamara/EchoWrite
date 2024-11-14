@@ -12,14 +12,14 @@ namespace Blog.PL.Areas.ViewComponents
         {
             _categoryRepo = CategoryRepo;
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string UserId = null)
         {
             var CategoriesVM = _categoryRepo.GetAll().Select(category => new CategoryViewModel
             {
                 Id = category.Id,
                 Name = category.Name,
             }).ToList();
-
+            ViewBag.UserId = UserId;
             return View(CategoriesVM);
         }
     }

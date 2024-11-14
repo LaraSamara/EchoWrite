@@ -16,31 +16,30 @@
             @Html.Partial("~/Areas/User/Views/Shared/_Post.cshtml", post)
         }
     </section>
-
 </div>
+@await Component.InvokeAsync("CategoryList", new { UserId = Model.Profile.UserId });
 @section Scripts{
     <partial name="_UserScript" />
     <partial name="_PostScript" />
     <partial name="~/Areas/User/Views/Shared/Follows/_FollowerFollowingScript.cshtml" />
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".category-link").forEach(function (link) {
-                link.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    const categoryId = $(this).data('id');
-                    console.log(categoryId);
-                    // const categoryId = this.getAttribute("data-id");
-                    filterPostsByCategory(categoryId);
-                });
+        $(document).ready(function () {
+            // Attach a click event listener to delete buttons
+            $('.category-link').on('click', function (event) {
+                event.preventDefault();
+                const categoryId = $(this).data('id'); 
+                const UserId = $(this).data('userid');
+                console.log("CategoryId: ", categoryId, "UserId: ", UserId);
+                filterPostsByCategory(categoryId, UserId);
+
             });
         });
-
-        function filterPostsByCategory(categoryId) {
+        function filterPostsByCategory(categoryId, UserId) {
             $.ajax({
-                url: `/User/Users/FilterPosts`, 
+                url: `/User/Users/FilterPosts`, // Update with actual controller if needed
                 type: 'GET',
-                data: { categoryId: categoryId },
+                data: { categoryId: categoryId, UserId: UserId },
                 success: function (result) {
                     $("#postFeed").html(result);
                 },
@@ -50,7 +49,6 @@
             });
         }
     </script>
-
 }
 
 

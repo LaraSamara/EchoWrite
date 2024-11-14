@@ -13,3 +13,4 @@ C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.dll
 C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\refint\Blog.BLL.dll
 C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.pdb
 C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\ref\Blog.BLL.dll
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.sourcelink.json
