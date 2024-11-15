@@ -11,9 +11,13 @@ namespace Blog.DAL.Models
     {
         public int Id { get; set; }
         public string UserId { get; set; }
+        public int PostId { get; set; }
 
         // Navigation property
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
+        //Navigation property
+        [ForeignKey("PostId")]
+        public Post Post { get; set; }
     }
 }

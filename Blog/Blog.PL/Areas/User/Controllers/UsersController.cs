@@ -1,6 +1,8 @@
 ﻿using Blog.BLL.Interfaces;
 using Blog.DAL.Data;
 using Blog.DAL.Models;
+using Blog.PL.Areas.User.ViewModels.Follow;
+
 //using Blog.PL.Areas.User.ViewModels.Like;
 using Blog.PL.Areas.User.ViewModels.Post;
 using Blog.PL.Areas.User.ViewModels.User;
@@ -21,12 +23,12 @@ namespace Blog.PL.Areas.User.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IRepositoryPost _postRepo;
         private readonly IRepositoryFollow _followRepo;
-        private readonly IRepositoryPostLike _postLikeRepo;
+        private readonly IRepositoryLike _postLikeRepo;
         private readonly IRepositoryUserReport _userReportRepo;
         private readonly IRepositoryComment _commentRepo;
 
         public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,ApplicationDbContext context, 
-            IRepositoryPost _PostRepo, IRepositoryFollow FollowRepo, IRepositoryPostLike PostLikeRepo, IRepositoryUserReport userReportRepo, IRepositoryComment commentRepo)
+            IRepositoryPost _PostRepo, IRepositoryFollow FollowRepo, IRepositoryLike PostLikeRepo, IRepositoryUserReport userReportRepo, IRepositoryComment commentRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -56,7 +58,7 @@ namespace Blog.PL.Areas.User.Controllers
                 UserProfilePictureUrl = user.ProfilePicture ?? $"{user.FirstName[0]}{user.LastName[0]}",
             });
 
-            return PartialView("~/Areas/User/Views/Shared/_UserSearchResults.cshtml", userViewModels);
+            return PartialView("~/Areas/User/Views/Users/Profile/_UserSearchResults.cshtml", userViewModels);
         }
         [HttpGet]
         public async Task<IActionResult> Profile(string UserId = null)
@@ -111,43 +113,84 @@ namespace Blog.PL.Areas.User.Controllers
                 Profile = ProfileSectionVM,
                 Posts = PostsVM
             };
-            return View(ProfileVM);
+            return View("~/Areas/User/Views/Users/Profile/Profile.cshtml", ProfileVM);
         }
         [HttpGet]
-        public IActionResult FilterPosts(int CategoryId, string UserId)
+        public IActionResult GetFollowers(string Id)
         {
-            Console.WriteLine("==========================================");
-            Console.WriteLine(UserId);
-            Console.WriteLine(CategoryId);
-            Console.WriteLine("==========================================");
-            IEnumerable<Post> posts;
-
-            if (CategoryId == 0) // "All" selected
+            var followers = _followRepo.GetFollowers(Id);
+            var followersVM = followers.Select(follow => new FollowViewModel()
             {
-                posts = _postRepo.GetUserPostsFilterByCategory(UserId, null);
+                UserId = follow.FollowerId,
+                UserName = $"{follow.Follower.FirstName} {follow.Follower.LastName}",
+                HavePicture = (follow.Follower.ProfilePicture != null) ? true : false,
+                UserProfilePictureUrl = (follow.Follower.ProfilePicture) ?? $"{follow.Follower.FirstName[0]}{follow.Follower.LastName[0]}",
+            });
+            return PartialView("~/Areas/User/Views/Users/Follows/_GetFollowers.cshtml", followersVM);
+        }
+        [HttpGet]
+        public IActionResult GetFollowing(string Id)
+        {
+            var followings = _followRepo.GetFollowing(Id);
+            var followingsVM = followings.Select(follow => new FollowViewModel()
+            {
+                UserId = follow.FollowingId,
+                UserName = $"{follow.Following.FirstName} {follow.Following.LastName}",
+                HavePicture = (follow.Following.ProfilePicture != null) ? true : false,
+                UserProfilePictureUrl = (follow.Following.ProfilePicture) ?? $"{follow.Following.FirstName[0]}{follow.Following.LastName[0]}",
+            });
+            return PartialView("~/Areas/User/Views/Users/Follows/_GetFollowing.cshtml", followingsVM);
+        }
+        [HttpPost]
+        public IActionResult ToggleFollow(string UserId)
+        {
+            var currentUserId = _userManager.GetUserId(User);
+            if (currentUserId == null || UserId == null)
+            {
+                return Json(new { success = false, message = "User not authenticated or target user not found." });
+            }
+            bool IsFollowing = _followRepo.IsFollowing(currentUserId, UserId);
+            if (IsFollowing)
+            {
+                var follow = _followRepo.GetFollow(currentUserId, UserId);
+                try
+                {
+                    if (follow != null)
+                    {
+                        _followRepo.Delete(follow);
+                        return Json(new { success = true, following = false, followerCount = _followRepo.GetFollowers(UserId).Count() });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Follow relationship not found." });
+                    }
+                }
+                catch (Exception e)
+                {
+                    // Log the exception message e.Message for better debugging
+                    return Json(new { success = false, message = "Failed to unfollow the user." });
+                }
             }
             else
             {
-                posts = _postRepo.GetUserPostsFilterByCategory(UserId, CategoryId);
-            }
-            var postsVM = posts.Select(post => new PostViewModel
-            {
-                UserId = post.UserId,
-                PostId = post.Id,
-                UserName = $"{post.User.FirstName} {post.User.LastName}",
-                HavePicture = post.User.ProfilePicture != null,
-                UserProfilePictureUrl = post.User.ProfilePicture?? $"{post.User.FirstName[0]}{post.User.LastName[0]}",
-                CategoryName = post.Category.Name,
-                Content = post.Content,
-                CreatedAt = post.CreatedAt,
-                UpdatedAt = post.UpdatedAt,
-                LikeCount = _postLikeRepo.PostLikesCount(post.Id),
-                CommentCount = _commentRepo.GetPostCommentsCount(post.Id),
-                IsCurrentUser = UserId == post.UserId,
-                IsLiked = _postLikeRepo.GetByUserAndPost(post.Id, UserId) != null,
-            });
+                var follow = new Follow()
+                {
+                    FollowerId = currentUserId,
+                    FollowingId = UserId,
+                };
+                try
+                {
 
-            return PartialView("~/Areas/User/Views/Shared/Posts/_PostFiltered.cshtml", postsVM);
+                    _followRepo.Add(follow);
+                    return Json(new { success = true, following = true, followerCount = _followRepo.GetFollowers(UserId).Count() });
+
+                }
+                catch (Exception e)
+                {
+                    return Json(new { success = false, message = "Failed to follow the user." });
+                }
+
+            }
         }
         [HttpGet]
         public async Task<IActionResult> EditProfile()
@@ -164,7 +207,7 @@ namespace Blog.PL.Areas.User.Controllers
                 LastName = currentUser.LastName,
                 Bio = currentUser.Bio
             };
-            return View("_EditProfile", model);
+            return View("~/Areas/User/Views/Users/Btns/_EditProfile.cshtml", model);
         }
         [HttpPost]
         public async Task<IActionResult> EditProfile(EditUserViewModel vm)
@@ -201,7 +244,7 @@ namespace Blog.PL.Areas.User.Controllers
         [HttpGet]
         public async Task <IActionResult> ChangePassword()
         {
-            return View("_ChangePassword");
+            return View("~/Areas/User/Views/Users/Btns/_ChangePassword.cshtml");
         }
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel vm)
@@ -244,7 +287,7 @@ namespace Blog.PL.Areas.User.Controllers
                 ReportedId = Id,    
                 ReporterId = UserId,
             };
-            return PartialView("~/Areas/User/Views/Users/_ReportUser.cshtml", vm);
+            return PartialView("~/Areas/User/Views/Users/Btns/_ReportUser.cshtml", vm);
         }
         [HttpPost]
         public IActionResult ReportUser(UserReportViewModel vm)
@@ -313,44 +356,7 @@ namespace Blog.PL.Areas.User.Controllers
                 IsCurrentUser = currentUser == post.UserId,
                 IsLiked = _postLikeRepo.GetByUserAndPost(post.Id, currentUser) != null,
             });
-            return PartialView(PostsVm);
-        }
-        [HttpGet]
-        public IActionResult FilterHomePosts(int CategoryId)
-        {
-            var currentUser = _userManager.GetUserId(User);
-            var FollowingsId = _followRepo.GetFollowing(currentUser).Select(F => F.FollowingId).ToList();
-            if (FollowingsId == null || !FollowingsId.Any())
-            {
-                return PartialView("_NotFound");
-            }
-            IEnumerable<Post> posts;
-            if (CategoryId == 0) // "All" selected
-            {
-                posts = _postRepo.GetFollowingPosts(FollowingsId, null);
-            }
-            else
-            {
-                posts = _postRepo.GetFollowingPosts(FollowingsId, CategoryId);
-            }
-            var postsVM = posts.Select(post => new PostViewModel
-            {
-                UserId = post.UserId,
-                PostId = post.Id,
-                UserName = $"{post.User.FirstName} {post.User.LastName}",
-                HavePicture = post.User.ProfilePicture != null,
-                UserProfilePictureUrl = post.User.ProfilePicture ?? $"{post.User.FirstName[0]}{post.User.LastName[0]}",
-                CategoryName = post.Category.Name,
-                Content = post.Content,
-                CreatedAt = post.CreatedAt,
-                UpdatedAt = post.UpdatedAt,
-                LikeCount = _postLikeRepo.PostLikesCount(post.Id),
-                CommentCount = _commentRepo.GetPostCommentsCount(post.Id),
-                IsCurrentUser = currentUser == post.UserId,
-                IsLiked = _postLikeRepo.GetByUserAndPost(post.Id, currentUser) != null,
-            });
-
-            return PartialView("~/Areas/User/Views/Shared/Posts/_PostFiltered.cshtml", postsVM);
+            return PartialView("~/Areas/User/Views/Users/Home/Home.cshtml",PostsVm);
         }
 
     }

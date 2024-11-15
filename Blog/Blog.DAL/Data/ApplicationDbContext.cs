@@ -39,7 +39,7 @@ namespace Blog.DAL.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // PostLike -> Post (One-to-Many)
-            modelBuilder.Entity<PostLike>()
+            modelBuilder.Entity<Like>()
                 .HasOne(l => l.Post)
                 .WithMany(p => p.PostLikes)
                 .HasForeignKey(l => l.PostId)
@@ -88,17 +88,10 @@ namespace Blog.DAL.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // PostLike -> ApplicationUser (One-to-Many)
-            modelBuilder.Entity<PostLike>()
+            modelBuilder.Entity<Like>()
                 .HasOne(pl => pl.User)
                 .WithMany(u => u.PostLikes)
                 .HasForeignKey(pl => pl.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // CommentLike -> ApplicationUser (One-to-Many)
-            modelBuilder.Entity<CommentLike>()
-                .HasOne(cl => cl.User)
-                .WithMany(u => u.CommentLikes)
-                .HasForeignKey(cl => cl.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // PostReport -> ApplicationUser (One-to-Many)
@@ -140,8 +133,7 @@ namespace Blog.DAL.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<PostLike> PostsLike { get; set; }
-        public DbSet<CommentLike> CommentsLike { get; set; }
+        public DbSet<Like> Likes { get; set; }
         public DbSet <CommentReport> CommentsReport { get; set; }
         public DbSet<PostReport> PostsReport { get; set; }
         public DbSet<UserReport> UsersReport { get; set; }

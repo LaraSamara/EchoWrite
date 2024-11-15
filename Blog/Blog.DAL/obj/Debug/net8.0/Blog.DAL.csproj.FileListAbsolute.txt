@@ -12,3 +12,4 @@ C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\ref\Blog.DAL.dll
 C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\bin\Debug\net8.0\Blog.DAL.runtimeconfig.json
 C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.csproj.AssemblyReference.cache
 C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.genruntimeconfig.cache
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.sourcelink.json

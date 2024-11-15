@@ -27,7 +27,27 @@ namespace Blog.BLL.Repositories
 
         public int Delete(Post post)
         {
-            _context.Posts.Remove(post);
+            // Retrieve the post from the database, including related entities like Comments and Likes
+            var postWithRelatedEntities = _context.Posts
+                .Include(p => p.Comments)
+                .Include(p => p.PostLikes)
+                .FirstOrDefault(p => p.Id == post.Id);
+
+            if (postWithRelatedEntities == null)
+            {
+                // If the post is not found, return 0 (or handle this as needed)
+                return 0;
+            }
+
+            // Remove related comments
+            _context.Comments.RemoveRange(postWithRelatedEntities.Comments);
+
+            // Remove related likes
+            _context.Likes.RemoveRange(postWithRelatedEntities.PostLikes);
+
+            // Remove the post itself
+            _context.Posts.Remove(postWithRelatedEntities);
+
             return _context.SaveChanges();
         }
 
@@ -47,11 +67,6 @@ namespace Blog.BLL.Repositories
                 .Include(p => p.PostLikes).Include(p => p.Comments).ToList(); 
         }
 
-        //public IEnumerable<Post> GetUserPosts(string UserId)
-        //{
-        //    var posts = _context.Posts.Include(p => p.Category).Include(p => p.User).Where(p => p.UserId == UserId).OrderByDescending(p => p.CreatedAt).ToList();
-        //    return posts;
-        //}
         public IEnumerable<Post> GetUserPostsFilterByCategory(string UserId, int? CategoryId)
         {
             var query = _context.Posts.Include(p => p.Category).Include(p => p.User).Where(p => p.UserId == UserId).OrderByDescending(p => p.CreatedAt).ToList();

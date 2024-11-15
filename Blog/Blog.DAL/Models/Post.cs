@@ -23,13 +23,13 @@ namespace Blog.DAL.Models
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
         public ICollection<Comment> Comments { get; set; }
-        public ICollection<PostLike> PostLikes { get; set; }
+        public ICollection<Like> PostLikes { get; set; }
         public ICollection<PostReport> PostReports { get; set; }
 
         public Post()
         {
             Comments = new HashSet<Comment>();
-            PostLikes = new HashSet<PostLike>();
+            PostLikes = new HashSet<Like>();
             PostReports = new HashSet<PostReport>();
         }
     }

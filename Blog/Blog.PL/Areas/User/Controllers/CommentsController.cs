@@ -40,7 +40,7 @@ namespace Blog.PL.Areas.User.Controllers
                 PostId = Id,
                 UserId = userId,
             };
-            return PartialView("~/Areas/User/Views/Shared/Comments/_CreateComment.cshtml", vm);
+            return PartialView("~/Areas/User/Views/Comments/_CreateComment.cshtml", vm);
         }
         [HttpPost]
         public IActionResult CreateComment(CreateCommentViewModel vm)
@@ -98,7 +98,7 @@ namespace Blog.PL.Areas.User.Controllers
                 UpdatedAt = comment.UpdatedAt,
 
             });
-            return PartialView("~/Areas/User/Views/Shared/Comments/_GetPostComments.cshtml", vm);
+            return PartialView("~/Areas/User/Views/Comments/_GetPostComments.cshtml", vm);
         }
         [HttpPost]
         public IActionResult Delete(int Id)
@@ -143,7 +143,7 @@ namespace Blog.PL.Areas.User.Controllers
                 CommentId = comment.Id,
                 UserId = comment.UserId
             };
-            return View("~/Areas/User/Views/Shared/Comments/_UpdateComment.cshtml", vm);
+            return View("~/Areas/User/Views/Comments/_UpdateComment.cshtml", vm);
         }
         [HttpPost]
         public IActionResult UpdateComment(UpdateCommentViewModel vm)
@@ -206,7 +206,7 @@ namespace Blog.PL.Areas.User.Controllers
                 UserId = comment.UserId,
                 CommentId = comment.Id,
             };
-            return View("~/Areas/User/Views/Shared/Comments/_ReportComment.cshtml", vm);
+            return View("~/Areas/User/Views/Comments/_ReportComment.cshtml", vm);
         }
         [HttpPost]
         public IActionResult ReportComment(ReportCommentViewModel vm)

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<FollowViewModel>;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Follower</title>
+    <link rel="stylesheet" href="~/css/User/Posts/StyleLike.css" asp-append-version="true" />
+</head>
+<body>
+    <section class="followers">
+        <div class="title">Followers</div>
+        @foreach (var follower in Model)
+        {
+            <partial name="~/Areas/User/Views/Users/Follows/_follow.cshtml" model="follower" />
+        }
+    </section>
+</body>
+</html>

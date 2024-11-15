@@ -19,8 +19,7 @@ namespace Blog.DAL.Models
         // Navigation properties
         public ICollection<Post> Posts { get; set; }
         public ICollection<Comment> Comments { get; set; }
-        public ICollection<PostLike> PostLikes { get; set; }
-        public ICollection<CommentLike> CommentLikes { get; set; }
+        public ICollection<Like> PostLikes { get; set; }
         public ICollection<PostReport> PostReports { get; set; }
         public ICollection<CommentReport> CommentReports { get; set; }
         public ICollection<Follow> Followers { get; set; }
@@ -32,9 +31,7 @@ namespace Blog.DAL.Models
         {
             Posts = new HashSet<Post>();
             Comments = new HashSet<Comment>();
-            PostLikes = new HashSet<PostLike>();
-            
-            CommentLikes = new HashSet<CommentLike>();
+            PostLikes = new HashSet<Like>();
             PostReports = new HashSet<PostReport>();
             CommentReports = new HashSet<CommentReport>();
             Followers = new HashSet<Follow>();

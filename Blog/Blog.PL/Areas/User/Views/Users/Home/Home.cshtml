@@ -1,0 +1,19 @@
+﻿@model IEnumerable< PostViewModel>
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Areas/User/Views/Shared/_UserLayout.cshtml";
+}
+@section UserStyle {
+    <link rel="stylesheet" href="~/css/User/Posts/StylePost.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/StyleMessage.css" />
+}
+    <section id="postFeed" class="page posts d-flex align-items-start justify-content-center flex-column w-75 my-5">
+        @foreach (var post in Model)
+        {
+        @Html.Partial("~/Areas/User/Views/Posts/_Post.cshtml", post)
+        }
+    </section>
+@await Component.InvokeAsync("CategoryList")
+@section Scripts{
+    <partial name="~/Areas/User/Views/Users/Home/_HpmeScript.cshtml" />
+}

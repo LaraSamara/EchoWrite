@@ -21,11 +21,12 @@ namespace Blog.PL.Areas.User.Controllers
         private readonly IRepositoryPost _postRepo;
         private readonly IRepositoryCategory _categoryRepo;
         private readonly IRepositoryPostReport _postReportRepo;
-        private readonly IRepositoryPostLike _postLikeRepo;
+        private readonly IRepositoryLike _postLikeRepo;
         private readonly IRepositoryComment _commentRepo;
+        private readonly IRepositoryFollow _followRepo;
 
         public PostsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager,IRepositoryPost PostRepo,
-            IRepositoryCategory CategoryRepo, IRepositoryPostReport PostReportRepo, IRepositoryPostLike PostLikeRepo, IRepositoryComment commentRepo)
+            IRepositoryCategory CategoryRepo, IRepositoryPostReport PostReportRepo, IRepositoryLike PostLikeRepo, IRepositoryComment commentRepo, IRepositoryFollow FollowRepo)
         {
             _context = context;
             _userManager = userManager;
@@ -34,6 +35,7 @@ namespace Blog.PL.Areas.User.Controllers
             _postReportRepo = PostReportRepo;
             _postLikeRepo = PostLikeRepo;
             _commentRepo = commentRepo;
+            _followRepo = FollowRepo;
         }
 
         [HttpGet]
@@ -48,7 +50,7 @@ namespace Blog.PL.Areas.User.Controllers
                 UserProfilePictureUrl = (user.ProfilePicture == null) ? $"{user.FirstName[0]}{user.LastName[0]}" : user.ProfilePicture,
                 Category = new SelectList(_categoryRepo.GetAll(), "Id", "Name")
             };
-            return PartialView("_AddPostForm", vm);
+            return PartialView("~/Areas/User/Views/Posts/_AddPostForm.cshtml", vm);
         }
         [HttpPost]
         public IActionResult CreatePost(CreatePostViewModel vm)
@@ -102,7 +104,7 @@ namespace Blog.PL.Areas.User.Controllers
                 Content = Post.Content,
             };
 
-            return PartialView("_UpdatePost", vm);
+            return PartialView("~/Areas/User/Views/Posts/_UpdatePost.cshtml", vm);
         }
         [HttpPost]
         public IActionResult UpdatePost(EditPostViewModel vm)
@@ -148,7 +150,7 @@ namespace Blog.PL.Areas.User.Controllers
                 UserId = UserId,
 
             };
-            return PartialView("_ReportPost", vm);
+            return PartialView("~/Areas/User/Views/Posts/_ReportPost.cshtml", vm);
         }
 
         [HttpPost]
@@ -198,7 +200,7 @@ namespace Blog.PL.Areas.User.Controllers
             if (existingLike == null)
             {
                 // Add new like
-                var postLike = new PostLike { 
+                var postLike = new Like { 
                     PostId = Id,
                     UserId = userId 
                 };
@@ -262,8 +264,77 @@ namespace Blog.PL.Areas.User.Controllers
                IsCurrentId = ( userId == like.Post.UserId),
                HavePicture = like.User?.ProfilePicture != null,
             }); 
-            return PartialView("_GetPostLikes", vm);
+            return PartialView("~/Areas/User/Views/Posts/_GetPostLikes.cshtml", vm);
 
+        }
+        [HttpGet]
+        public IActionResult FilterProfilePosts(int CategoryId, string UserId)
+        {
+            IEnumerable<Post> posts;
+
+            if (CategoryId == 0) // "All" selected
+            {
+                posts = _postRepo.GetUserPostsFilterByCategory(UserId, null);
+            }
+            else
+            {
+                posts = _postRepo.GetUserPostsFilterByCategory(UserId, CategoryId);
+            }
+            var postsVM = posts.Select(post => new PostViewModel
+            {
+                UserId = post.UserId,
+                PostId = post.Id,
+                UserName = $"{post.User.FirstName} {post.User.LastName}",
+                HavePicture = post.User.ProfilePicture != null,
+                UserProfilePictureUrl = post.User.ProfilePicture ?? $"{post.User.FirstName[0]}{post.User.LastName[0]}",
+                CategoryName = post.Category.Name,
+                Content = post.Content,
+                CreatedAt = post.CreatedAt,
+                UpdatedAt = post.UpdatedAt,
+                LikeCount = _postLikeRepo.PostLikesCount(post.Id),
+                CommentCount = _commentRepo.GetPostCommentsCount(post.Id),
+                IsCurrentUser = UserId == post.UserId,
+                IsLiked = _postLikeRepo.GetByUserAndPost(post.Id, UserId) != null,
+            });
+
+            return PartialView("~/Areas/User/Views/Posts/_PostFiltered.cshtml", postsVM);
+        }
+        [HttpGet]
+        public IActionResult FilterHomePosts(int CategoryId)
+        {
+            var currentUser = _userManager.GetUserId(User);
+            var FollowingsId = _followRepo.GetFollowing(currentUser).Select(F => F.FollowingId).ToList();
+            if (FollowingsId == null || !FollowingsId.Any())
+            {
+                return PartialView("_NotFound");
+            }
+            IEnumerable<Post> posts;
+            if (CategoryId == 0) // "All" selected
+            {
+                posts = _postRepo.GetFollowingPosts(FollowingsId, null);
+            }
+            else
+            {
+                posts = _postRepo.GetFollowingPosts(FollowingsId, CategoryId);
+            }
+            var postsVM = posts.Select(post => new PostViewModel
+            {
+                UserId = post.UserId,
+                PostId = post.Id,
+                UserName = $"{post.User.FirstName} {post.User.LastName}",
+                HavePicture = post.User.ProfilePicture != null,
+                UserProfilePictureUrl = post.User.ProfilePicture ?? $"{post.User.FirstName[0]}{post.User.LastName[0]}",
+                CategoryName = post.Category.Name,
+                Content = post.Content,
+                CreatedAt = post.CreatedAt,
+                UpdatedAt = post.UpdatedAt,
+                LikeCount = _postLikeRepo.PostLikesCount(post.Id),
+                CommentCount = _commentRepo.GetPostCommentsCount(post.Id),
+                IsCurrentUser = currentUser == post.UserId,
+                IsLiked = _postLikeRepo.GetByUserAndPost(post.Id, currentUser) != null,
+            });
+
+            return PartialView("~/Areas/User/Views/Posts/_PostFiltered.cshtml", postsVM);
         }
     }
 }

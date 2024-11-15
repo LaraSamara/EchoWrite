@@ -1,0 +1,25 @@
+﻿@model ProfileViewModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Areas/User/Views/Shared/_UserLayout.cshtml";
+}
+@section UserStyle {
+    <link rel="stylesheet" href="~/css/User/Posts/StylePost.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/User/Users/StyleProfile.css" asp-append-version="true" />
+}
+<div class="pt-5"  id="editProfileModal">
+    @Html.Partial("~/Areas/User/Views/Users/Profile/_Profile.cshtml", Model.Profile)
+
+    <section id="postFeed" class="posts d-flex align-items-start justify-content-center flex-column w-100 my-5">
+        @foreach (var post in Model.Posts)
+        {
+            @Html.Partial("~/Areas/User/Views/Posts/_Post.cshtml", post)
+        }
+    </section>
+</div>
+@await Component.InvokeAsync("CategoryList", new { UserId = Model.Profile.UserId })
+@section Scripts{
+    <partial name="~/Areas/User/Views/Users/Profile/_ProfileScript.cshtml" />
+}
+
+

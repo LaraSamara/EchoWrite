@@ -28,11 +28,10 @@ namespace Blog.PL
             // Repo Implementation & Interface
             builder.Services.AddScoped<IRepositoryCategory, RepositoryCategory>();
             builder.Services.AddScoped<IRepositoryComment, RepositoryComment>();
-            builder.Services.AddScoped<IRepositoryCommentLike, RepositoryCommentLike>();
             builder.Services.AddScoped<IRepositoryCommentReport, RepositoryCommentReport>();
             builder.Services.AddScoped<IRepositoryFollow, RepositoryFollow>();
             builder.Services.AddScoped<IRepositoryPost, RepositoryPost>();
-            builder.Services.AddScoped<IRepositoryPostLike, RepositoryPostLike>();
+            builder.Services.AddScoped<IRepositoryLike, RepositoryLike>();
             builder.Services.AddScoped<IRepositoryPostReport, RepositoryPostReport>();
             builder.Services.AddScoped<IRepositoryUserReport, RepositoryUserReport>();
             //Mapper

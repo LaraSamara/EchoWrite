@@ -25,12 +25,10 @@ namespace Blog.DAL.Models
         [ForeignKey("PostId")]
         public Post Post { get; set; }
         public ICollection<CommentReport> CommentReports { get; set; }
-        public ICollection<CommentLike> CommentLikes { get; set; }
 
         public Comment()
         {
             CommentReports = new HashSet<CommentReport>();
-            CommentLikes = new HashSet<CommentLike>();
         }
     }
 }
