@@ -106,7 +106,7 @@ namespace Blog.PL.Areas.User.Controllers
             var comment = _commentRepo.Get(Id);
             if(comment == null)
             {
-                return NotFound();  
+                return Json(new { success = false, message = "Comment Not Found" });
             }
             try
             {

@@ -16,5 +16,7 @@ namespace Blog.BLL.Interfaces
         public IEnumerable<Comment> GetAll();
         public IEnumerable<Comment> GetPostComments(int PostId);
         public int GetPostCommentsCount(int PostId);
+        public int CommentCount();
+        public IEnumerable<Comment> GetUserComments(string Id);
     }
 }

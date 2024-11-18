@@ -14,5 +14,7 @@ namespace Blog.BLL.Interfaces
         public int Delete(CommentReport report);
         public CommentReport Get(int id);
         public IEnumerable<CommentReport> GetAll();  
+        public int CommentReportCount();
+        public IEnumerable<CommentReport> GetCommentsReportsByUser(string Id);
     }
 }

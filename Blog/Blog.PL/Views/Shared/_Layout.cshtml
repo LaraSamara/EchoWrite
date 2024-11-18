@@ -19,7 +19,7 @@
         <nav class="navbar navbar-expand-sm  navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class=" container-fluid px-5">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Images/Layout/logo.png" /></a>
-                @RenderSection("Nav", required: false)
+                    @RenderSection("Nav", required: false)
             </div>
         </nav>
     </header>
@@ -42,12 +42,21 @@
             }
             else
             {
-                <div class="item">
-                    <a asp-action="Profile" asp-controller="Users" asp-area="User"><i class="fa-solid fa-house-user"></i>Profile</a>
-                </div>
-                <div class="item">
-                    <a asp-action="Home" asp-controller="Users" asp-area="User"><i class="fa-solid fa-house-lock"></i>Home</a>
-                </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="item">
+                        <a asp-action="Profile" asp-controller="Admins" asp-area="Admin"><i class="fa-solid fa-house-user"></i>Dashboard</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="item">
+                        <a asp-action="Profile" asp-controller="Users" asp-area="User"><i class="fa-solid fa-house-user"></i>Profile</a>
+                    </div>
+                    <div class="item">
+                        <a asp-action="Home" asp-controller="Users" asp-area="User"><i class="fa-solid fa-house-lock"></i>Home</a>
+                    </div>
+                }
               @*<div class="item">
                     <a href="">
                         <i class="fa-solid fa-house-lock"></i>Profile

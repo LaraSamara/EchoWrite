@@ -124,8 +124,11 @@ namespace Blog.PL.Controllers
                             {
                                 // Redirect to Profile action in Users controller within the User area
                                 return RedirectToAction("Profile", "Users", new { Area = "User" });
+                            }else if (await _userManager.IsInRoleAsync(user, "Admin"))
+                            {
+                                return RedirectToAction("Profile", "Admins", new { Area = "Admin" });
                             }
-                            return RedirectToAction("Index", "Home");
+                                return RedirectToAction("Index", "Home");
                         }
                     }
                 }

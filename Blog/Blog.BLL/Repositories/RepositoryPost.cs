@@ -27,28 +27,26 @@ namespace Blog.BLL.Repositories
 
         public int Delete(Post post)
         {
-            // Retrieve the post from the database, including related entities like Comments and Likes
-            var postWithRelatedEntities = _context.Posts
+            var p = _context.Posts
                 .Include(p => p.Comments)
                 .Include(p => p.PostLikes)
+                .Include(p => p.PostReports)
                 .FirstOrDefault(p => p.Id == post.Id);
 
-            if (postWithRelatedEntities == null)
+            if (p != null)
             {
-                // If the post is not found, return 0 (or handle this as needed)
-                return 0;
+                // Remove dependent entities
+                _context.Comments.RemoveRange(p.Comments);
+                _context.Likes.RemoveRange(p.PostLikes);
+                _context.PostsReport.RemoveRange(p.PostReports);
+
+                // Remove the post itself
+                _context.Posts.Remove(p);
+
+                // Save changes
+                return _context.SaveChanges();
             }
-
-            // Remove related comments
-            _context.Comments.RemoveRange(postWithRelatedEntities.Comments);
-
-            // Remove related likes
-            _context.Likes.RemoveRange(postWithRelatedEntities.PostLikes);
-
-            // Remove the post itself
-            _context.Posts.Remove(postWithRelatedEntities);
-
-            return _context.SaveChanges();
+            return 0;
         }
 
         public Post Get(int id)
@@ -94,6 +92,10 @@ namespace Blog.BLL.Repositories
             }
             var posts = query.OrderByDescending(p => p.CreatedAt).ToList();
             return posts;
+        }
+        public int PostCount()
+        {
+            return _context.Posts.Count();
         }
     }
 }

@@ -1,0 +1,132 @@
+﻿*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+}
+body {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+main {
+    width: 90%;
+    height: 90vh;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-top: 1px solid #2394f0;
+    border-left: 1px solid #2394f0;
+}
+nav button,
+nav button i,
+nav .category a{
+    padding: 7px;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 10px;
+    color: #2394f0;
+    transition: all ease 0.4s;
+}
+nav button:hover,
+nav .category a:hover{
+    letter-spacing: 1px;
+}
+.about {
+    margin-top: 2rem;
+}
+.tag {
+    padding: 12px 60px;
+    outline: none;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    border-radius: 10px;
+}
+.tag:nth-child(1) {
+    background: linear-gradient(to right, #a1c4f5, #73b3e7, #4b8fd4);
+}
+.tag:nth-child(2) {
+    background: linear-gradient(to bottom, #72a7e3, #5590d5, #4078c0);
+}
+.tag:nth-child(3) {
+    background: linear-gradient(45deg, #6c9ccf, #4783b2, #316b99 );
+}
+.tag .text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    font-size: 1.2rem;
+}
+.tag i{
+    font-size: 1.3rem;
+}
+.btns button {
+    width: 100%;
+    padding: 20px 10px;
+    margin: 15px 0;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1.3rem;
+    background: #4b8fd4;
+    transition: all ease 0.3s;
+}
+.btns button:hover{
+    letter-spacing: 1px;
+}
+.btns {
+    margin-top: 3rem;
+}
+.users {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 30px;
+}
+.users .box{
+    width: 90%;
+    height: 420px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+/*    overflow-y: auto;*/
+}
+.box .search {
+    padding: 25px;
+    border-right: 1px solid #2394f0;
+    height: 420px;
+    overflow-y: auto;
+}
+.box .search input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    outline: none;
+    border: 1px solid #2394f0;
+    overflow-y: auto;
+}
+.box .search input::placeholder{
+       font-size: 1.2rem;
+       color: #2394f0;
+}
+.box .all-users {
+    padding: 25px;
+}
+.searchMenu .NoResult {
+    text-align: center !important;
+    line-height: 300px !important;
+    font-size: 1.8rem !important;
+    font-weight: bold !important;
+    color: #2394f0 !important;
+}

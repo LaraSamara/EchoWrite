@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace Blog.PL.Areas.User.Controllers
 {
@@ -26,31 +27,47 @@ namespace Blog.PL.Areas.User.Controllers
         private readonly IRepositoryLike _postLikeRepo;
         private readonly IRepositoryUserReport _userReportRepo;
         private readonly IRepositoryComment _commentRepo;
+        private readonly IRepositoryUserReport _userReport;
+        private readonly IRepositoryPostReport _postReport;
+        private readonly IRepositoryCommentReport _commentReport;
 
         public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,ApplicationDbContext context, 
-            IRepositoryPost _PostRepo, IRepositoryFollow FollowRepo, IRepositoryLike PostLikeRepo, IRepositoryUserReport userReportRepo, IRepositoryComment commentRepo)
+            IRepositoryPost PostRepo, IRepositoryFollow FollowRepo, IRepositoryLike PostLikeRepo, IRepositoryUserReport userReportRepo,
+            IRepositoryComment commentRepo, IRepositoryUserReport userReport, IRepositoryPostReport postReport, IRepositoryCommentReport commentReport)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
-            _postRepo = _PostRepo;
+            _postRepo = PostRepo;
             _followRepo = FollowRepo;
             _postLikeRepo = PostLikeRepo;
             _userReportRepo = userReportRepo;
             _commentRepo = commentRepo;
+            _userReport = userReport;
+            _postReport = postReport;
+            _commentReport = commentReport;
         }
         [HttpGet]
-        public IActionResult SearchUsers(string query)
+        public async Task <IActionResult> SearchUsers(string query)
         {
             var userId = _userManager.GetUserId(User);
-            // Query database for users matching the search query
             var users = _context.Users
-                               .Where(user => user.Id != userId &&
-                                   (user.FirstName.Contains(query) ||
-                                    user.LastName.Contains(query)))
-                               .ToList();
+              .Where(user => user.Id != userId &&
+                  (user.FirstName.Contains(query) ||
+                   user.LastName.Contains(query)))
+              .ToList();  // Execute the database query first
 
-            var userViewModels = users.Select(user => new UserViewModel
+            // Now filter users by role in-memory
+            var filteredUsers = new List<ApplicationUser>();
+            foreach (var user in users)
+            {
+                if (await _userManager.IsInRoleAsync(user, "User"))  // Check role asynchronously after fetching users
+                {
+                    filteredUsers.Add(user);
+                }
+            }
+
+            var userViewModels = filteredUsers.Select(user => new UserViewModel
             {
                 UserId = user.Id,
                 UserName = $"{user.FirstName} {user.LastName}",
@@ -358,7 +375,105 @@ namespace Blog.PL.Areas.User.Controllers
             });
             return PartialView("~/Areas/User/Views/Users/Home/Home.cshtml",PostsVm);
         }
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(string userId)
+        {
+            try
+            {
+                var user = _context.Users
+                         .Include(u => u.Posts)
+                             .ThenInclude(p => p.PostLikes)
+                         .Include(u => u.Posts)
+                             .ThenInclude(p => p.Comments)
+                         .Include(u => u.Posts)
+                             .ThenInclude(p => p.PostReports)
+                         .Include(u => u.Comments)
+                         .Include(u => u.PostLikes)
+                         .Include(u => u.Following)
+                         .Include(u => u.Followers)
+                         .Include(u => u.PostReports)
+                         .Include(u => u.CommentReports)
+                         .Include(u => u.ReportsMade)
+                         .Include(u => u.ReportsReceived)
+                         .FirstOrDefault(u => u.Id == userId);
+
+                if (user != null)
+                {
+                    foreach (var post in user.Posts)
+                    {
+                        if (post.PostLikes.Count() != 0)
+                        {
+                            _context.Likes.RemoveRange(post.PostLikes);
+                            _context.SaveChanges();
+                        }
+                        if (post.Comments.Count() != 0) {
+                            _context.Comments.RemoveRange(post.Comments);
+                            _context.SaveChanges();
+                        }
+                        if (post.PostReports.Count() != 0)
+                        {
+                            _context.PostsReport.RemoveRange(post.PostReports);
+                            _context.SaveChanges();
+                        }
+                    }
+                    if (user.Posts.Count() != 0)
+                    {
+                        _context.Posts.RemoveRange(user.Posts);
+                        _context.SaveChanges();
+                    }
+                    if (user.CommentReports.Count() != 0)
+                    {
+                        _context.CommentsReport.RemoveRange(user.CommentReports);
+                        _context.SaveChanges();
+                    }
+                        // Comments by the user and related reports
+                    if (user.Comments.Count() != 0)
+                    {
+                        _context.Comments.RemoveRange(user.Comments);
+                        _context.SaveChanges();
+                    }
+                    if (user.PostLikes.Count() != 0)
+                    {
+                        // Likes by the user
+                        _context.Likes.RemoveRange(user.PostLikes);
+                        _context.SaveChanges();
+                    }
+                    if (user.Followers.Count() != 0)
+                    {
+                        // Follows (both directions)
+                        _context.Follows.RemoveRange(user.Followers);
+                        _context.SaveChanges();
+                    }
+                    if (user.Following.Count() != 0)
+                    {
+                        _context.Follows.RemoveRange(user.Following);
+                        _context.SaveChanges();
+                    }
+                    if (user.ReportsMade.Count() != 0)
+                    {
+                        // Reports made by or against the user
+                        _context.UsersReport.RemoveRange(user.ReportsMade);
+                        _context.SaveChanges();
+                    }
+                    if (user.ReportsReceived.Count() != 0)
+                    {
+                        _context.UsersReport.RemoveRange(user.ReportsReceived);
+                        _context.SaveChanges();
+                    }
+                    var res = await _userManager.DeleteAsync(user);
+                    Console.WriteLine(res);
+                    Console.WriteLine("=================================================");    
+                    return Ok(new { success = true, message = "Deleted Successfully" });
+                }
+                return Ok(new { success = false, message = "Something get wrong" });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new { success = false, message = "Something get wrong" });
+
+            }
+        }
 
     }
-    
+
 }

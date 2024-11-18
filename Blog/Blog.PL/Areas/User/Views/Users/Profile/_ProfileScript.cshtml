@@ -232,10 +232,8 @@
     });
 </script>
 
-@* Post Buttons
- *@
+@* Post Buttons *@
 <partial name="~/Areas/User/Views/Posts/_PostScript.cshtml" />
-
 @*  Filter Profile Category *@
 <script>
     $(document).ready(function () {
@@ -262,3 +260,58 @@
         });
     }
 </script>
+@* @* Delete User Button*@
+<script>
+    $(document).on('click', '#DeleteButton', function () {
+        var deleteId = $(this).data('id');
+        let errorMessage = 'An error occurred while removing the item.';
+        let actionUrl = `/User/Users/DeleteUser?userId=${deleteId}`;
+        console.log(deleteId);
+        let successMessage = 'User successfully removed.';
+        // Trigger SweetAlert confirmation
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `This action cannot be undone.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, remove it!',
+            cancelButtonText: 'No, cancel',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Perform the delete action via AJAX if confirmed
+                $.ajax({
+                    url: actionUrl,
+                    method: 'POST',
+                    success: function (response) {
+                        if (response.success) {
+                            // If successful, show a success message and remove the item from the page
+                            Swal.fire(
+                                'Deleted!',
+                                successMessage,
+                                'success'
+                            ).then(() => {
+                            });
+                        } else {
+                            // If deletion fails, show an error message
+                            Swal.fire(
+                                'Error!',
+                                errorMessage,
+                                'error'
+                            );
+                        }
+                    },
+                    error: function () {
+                        // In case of AJAX failure, show an error message
+                        Swal.fire(
+                            'Error!',
+                            errorMessage,
+                            'error'
+                        );
+                    }
+                });
+            }
+        });
+    });
+</script>
+

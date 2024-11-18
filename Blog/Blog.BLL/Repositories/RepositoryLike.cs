@@ -62,5 +62,10 @@ namespace Blog.BLL.Repositories
         {
             return _context.Likes.AsNoTracking().Where(p => p.PostId == Id).Include(l => l.User).Include(l => l.Post).ToList();
         }
+        public IEnumerable<Like> GetLikesForUser(string Id)
+        {
+            return _context.Likes.AsNoTracking().Where(p => p.UserId == Id).Include(l => l.User).Include(l => l.Post).ToList();
+
+        }
     }
 }

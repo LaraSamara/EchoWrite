@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Blog.BLL</id>
+    <version>1.0.0</version>
+    <authors>Blog.BLL</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="5a0e001f5cea75621b4492c10a5be7a6949a6385" />
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="Blog.DAL" version="1.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\bin\Debug\net8.0\Blog.BLL.dll" target="lib\net8.0\Blog.BLL.dll" />
+  </files>
+</package>

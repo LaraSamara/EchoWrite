@@ -11,7 +11,11 @@ namespace Blog.BLL.Interfaces
     {
         public int Add(UserReport report);
         public int Delete (UserReport report);
+        public int Update (UserReport report);
         public IEnumerable<UserReport> GetAll ();
+        public UserReport Get(int id);
         public bool HasReported(string userId, string reportedUserId);
+        public int UserReportCount();
+        public IEnumerable<UserReport> GetUserReport(string Id, int reportId);
     }
 }

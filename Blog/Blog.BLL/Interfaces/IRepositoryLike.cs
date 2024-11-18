@@ -17,5 +17,6 @@ namespace Blog.BLL.Interfaces
         public IEnumerable<Like> GetLikesForPost(int PostId);
         public Like GetByUserAndPost(int PostId, string UserId);
         public int PostLikesCount(int postId);
+        public IEnumerable<Like> GetLikesForUser(string Id);
     }
 }

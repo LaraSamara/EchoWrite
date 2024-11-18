@@ -1,0 +1,73 @@
+﻿@model IEnumerable< Blog.PL.Areas.Admin.ViewModels.ReportViewModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<section class="user-reports">
+    <div class="title text-capitalize">@ViewBag.type Reports</div>
+    @foreach (var report in Model)
+    {
+        <div class="report-card">
+            <div class="d-flex align-items-center justify-content-between">
+                <a asp-area="User" asp-controller="Users" asp-action="Profile" asp-route-UserId="@report.Reporter.UserId" class="d-flex align-items-center justify-content-start">
+                    <div class="img me-2">
+                        @if (report.Reporter.HavePicture)
+                        {
+                            <img src="~/Files/Images/@report.Reporter.UserProfilePictureUrl" alt="User Picture" />
+                        }
+                        else
+                        {
+                            <div class="content text-uppercase">@report.Reporter.UserProfilePictureUrl</div>
+                        }
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center flex-column">
+                        <div class="name text-capitalize">@report.Reporter.UserName</div>
+                        <div class="report-date">@report.ReportDate</div>
+                    </div>
+                </a>
+                <div class="right d-flex flex-column align-items-end justify-content-center">
+                    <div class="icons mb-2">
+                            @if (ViewBag.type == "user")
+                            {
+                                <a href="javascript:void(0)" class="me-2 remove" data-type="@ViewBag.type" data-id="@report.ReportedId" data-report="@report.Id">
+                                    <i class="fa-solid fa-user-slash"></i>
+                                </a>
+                            }
+                            else if (ViewBag.type == "post")
+                            {
+                                <a href="javascript:void(0)" class="me-2 remove" data-type="@ViewBag.type" data-id="@report.PostId">
+                                    <i class="fa-regular fa-calendar-xmark"></i>
+                                </a>
+                            }
+                            else if (ViewBag.type == "comment")
+                            {
+                                <a href="javascript:void(0)" class="me-2 remove" data-type="@ViewBag.type" data-id="@report.CommentId">
+                                    <i class="fa-solid fa-comment-slash"></i>
+                                </a>
+                            }
+                           
+                        <a href="javascript:void(0)" class="ignore" data-type="@ViewBag.type" data-id = "@report.Id"><i class="fa-solid fa-eye"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="user-details d-flex align-items-start justify-content-between flex-column">
+                <div class="d-flex justify-content-between align-items-center flex-row w-100">
+                    <div class="my-3 reason">Reason: @report.Reason</div>
+                </div>
+                @if(ViewBag.type == "user")
+                {
+                    <a asp-area="User" asp-controller="Users" asp-action="Profile" asp-route-UserId="@report.ReportedId">Reported User</a>
+
+                }
+                else if (ViewBag.type == "post")
+                {
+                    <a data-url="@Url.Action("GetPost", "Admins", new { Id = report.PostId })" class="details">Reported Post</a>
+
+                }
+                else if (ViewBag.type == "comment")
+                {
+                    <a data-url="@Url.Action("GetComment", "Admins", new { Id = report.CommentId })" class="details">Reported Comment</a>
+                    <a data-url="@Url.Action("GetPost", "Admins", new { Id = report.PostId })" class="details">Reported Post</a>
+                     
+                }
+            </div>
+        </div>
+    }
+</section>

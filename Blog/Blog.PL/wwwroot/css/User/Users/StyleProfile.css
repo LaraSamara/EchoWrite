@@ -64,6 +64,14 @@ a{
     background: linear-gradient(45deg, #99ccff, #2394f0);
     letter-spacing: 1px;
 }
+.bottom .btns #DeleteButton {
+    background: linear-gradient(to right, #ff4d4d, #b30000);
+    transition: all ease 0.3s;
+}
+.bottom .btns #DeleteButton:hover {
+    background: linear-gradient(to right, #b30000, #ff4d4d);
+    letter-spacing: 1px;
+}
 .bottom .btns .change,
 .bottom .btns #ReportProfileBtn {
     background: linear-gradient(45deg, #1e3a86, #2394f0);

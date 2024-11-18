@@ -1,0 +1,41 @@
+﻿@model Blog.PL.Areas.Admin.ViewModels.PostViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="card d-flex align-items-stretch justify-content-center flex-column my-4 p-3">
+    <div class="head d-flex align-items-center justify-content-between w-100">
+        <div class="left">
+            <a class="d-flex align-items-center justify-content-strat" asp-area="User" asp-controller="Users" asp-action="Profile" asp-route-UserId="@Model.UserId">
+                <div class="img me-2">
+                    @if (Model.HavePicture)
+                    {
+                        <img src="~/Files/Images/@Model.UserProfilePictureUrl" alt="User Picture" />
+                    }
+                    else
+                    {
+                        <div class="content  text-uppercase">@Model.UserProfilePictureUrl</div>
+                    }
+                </div>
+                <div class="text">
+                    <div class="name text-capitalize">@Model.UserName</div>
+                    @if (Model.CreatedAt.ToString("yyyy-MM-dd HH:mm:ss") == Model.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss"))
+                    {
+                        <div class="report-date">
+                            <span>C: @Model.CreatedAt</span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="report-date">
+                            <span>U: @Model.UpdatedAt </span>
+                        </div>
+                    }
+                </div>
+            </a>
+        </div>
+        <div class="right text-capitalize d-flex flex-column  justify-content-center align-items-center">
+            <div class="category">@Model.CategoryName</div>
+        </div>
+    </div>
+    <div class="body w-100 my-3  d-flex align-items-center justify-content-start text-start">
+        <p>@Model.Content</p>
+    </div>
+</div> 

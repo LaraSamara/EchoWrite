@@ -37,6 +37,10 @@ header, nav{
     margin: 0!important;
     padding: 0!important;
 }
+nav a{
+    outline: none;
+    border: none;
+}
 .navbar-brand img {
     width: 150px;
 }
@@ -107,9 +111,6 @@ aside#search {
     border-bottom: solid 1px #fff;
     margin-left: 0 !important;
 }
-/*.menu .item.top a{
-        border-top: solid 1px #fff;
-}*/
 .item .sub-menu a {
     border: none;
 }
@@ -127,13 +128,13 @@ aside#search {
     box-shadow: none;
 }
 .dropdown.rotate {
-    transform: rotate(90deg); /* Rotate the arrow */
+    transform: rotate(90deg); 
 }
 .item .sub-menu {
     background: #2394f411;
-    height: 0; /* Initially hide submenu */
-    overflow: hidden; /* Hide overflow content */
-    transition: height 0.5s ease; /* Transition effect for height */
+    height: 0; 
+    overflow: hidden; 
+    transition: height 0.5s ease; 
 }
 .menu .item a i{
     color:#fff!important;
@@ -143,7 +144,7 @@ aside#search .head{
     padding: 10px 20px 0 10px;
 }
 aside#search .head i{
-        color: #2394f0;
+      color: #2394f0;
 }
 .searchMenu {
     margin-top: 10px;

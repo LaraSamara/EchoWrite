@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Blog.DAL.Data
 {
-    public class ApplicationDbContext:IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option) : base(option) { }
 
@@ -20,16 +20,15 @@ namespace Blog.DAL.Data
             var RoleAdminId = Guid.NewGuid().ToString();
             var RoleUserId = Guid.NewGuid().ToString();
             modelBuilder.Entity<IdentityRole>().HasData(
-                new IdentityRole { Id = RoleAdminId, Name = "Admin" ,NormalizedName = "ADMIN"},
-                new IdentityRole { Id = RoleUserId , Name = "User", NormalizedName = "USER"}
+                new IdentityRole { Id = RoleAdminId, Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Id = RoleUserId, Name = "User", NormalizedName = "USER" }
             );
-
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Phisics"},
-                new Category {Id = 2, Name = "Medical" },
-                new Category { Id = 3, Name = "Economic"},
+                new Category { Id = 1, Name = "Phisics" },
+                new Category { Id = 2, Name = "Medical" },
+                new Category { Id = 3, Name = "Economic" },
                 new Category { Id = 4, Name = "IT" }
-            );
+);
 
             // Comment -> Post (One-to-Many)
             modelBuilder.Entity<Comment>()
@@ -126,9 +125,9 @@ namespace Blog.DAL.Data
                 .WithMany(u => u.ReportsReceived)
                 .HasForeignKey(r => r.ReportedId)
                 .OnDelete(DeleteBehavior.Restrict);
-        }
+    }
 
-        public DbSet<ApplicationUser> Users {  get; set; }
+    public DbSet<ApplicationUser> Users {  get; set; }
         public DbSet<Follow> Follows { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Post> Posts { get; set; }

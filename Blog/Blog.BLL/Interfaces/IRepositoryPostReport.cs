@@ -14,5 +14,7 @@ namespace Blog.BLL.Interfaces
         public int Delete(PostReport report);
         public PostReport Get(int id);
         public IEnumerable<PostReport> GetAll();
+        public int PostReportCount();
+        public IEnumerable<PostReport> ReportsPostByUser(string Id);
     }
 }

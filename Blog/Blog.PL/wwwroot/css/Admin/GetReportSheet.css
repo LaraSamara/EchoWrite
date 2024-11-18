@@ -1,0 +1,86 @@
+﻿section.user-reports,
+section.details{
+    max-height: 500px !important; /* Set desired max height */
+    overflow-y: auto !important; /* Enable vertical scroll */
+    padding-right: 10px !important; /* Add padding for scrollbar space */
+}
+section .title {
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #2394f0, #99ccff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+section.user-reports .report-card,
+section.details .user-details {
+    border: 1px solid #2394f0;
+    padding: 13px;
+    margin: 15px 0;
+}
+section a {
+    color: #2394f0 !important;
+    transition: all ease 0.4s;
+}
+section a:hover
+{
+    letter-spacing: 1px;
+}
+section.details .user-details a {
+    text-decoration: none;
+}
+.remove i{
+    color: #FF6F61;
+}
+.ignore i {
+    color: #2394f0f2 !important;
+}
+a.details:hover{
+    text-decoration: underline;
+}
+.report-date{
+    font-size: 14px;
+}
+.reason,
+.body{
+    font-size: 1.4rem;
+    color: #003366f0;
+}
+.body {
+    font-size: 1.2rem;
+}
+.left .text{
+    font-size: 1rem;
+}
+a.details {
+    cursor: pointer !important;
+}
+.swal2-confirm,
+.swal2-cancel {
+    padding: 10px;
+    border: none;
+    outline: none;
+    color: #fff;
+    transition: all ease 0.3s;
+}
+
+.swal2-confirm {
+    background: linear-gradient(45deg, #2394f0, #99ccff);
+}
+
+.swal2-cancel {
+    background: linear-gradient(to right, #ff4d4d, #b30000);
+}
+
+.swal2-popup .swal2-confirm:hover,
+.swal2-popup .swal2-cancel:hover {
+    letter-spacing: 1px;
+}
+
+.swal2-popup .swal2-confirm:hover {
+    background: linear-gradient(45deg, #99ccff, #2394f0) !important;
+}
+
+.swal2-popup .swal2-cancel:hover {
+    background: linear-gradient(to right, #b30000, #ff4d4d);
+}

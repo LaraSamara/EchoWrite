@@ -1,0 +1,85 @@
+﻿@{
+    Layout = null;
+}
+@model Blog.PL.Areas.Admin.ViewModels.AdminViewModel;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin</title>
+    @* Sweet Alert *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    @*  Font Awesome *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    @* Bootstrap *@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @* Custome css *@
+    <link rel="stylesheet" href="~/css/User/Posts/StyleLike.css" />
+    <link rel="stylesheet" href="~/css/Admin/GetReportSheet.css" />
+    <link rel="stylesheet" href="~/css/Admin/AdminSheet.css" />
+</head>
+<body>
+    <main>
+        <nav class="d-flex align-items-center justify-content-between ">
+            <div class="category">
+                <a class="AddCategory" href="#"><i class="fa-solid fa-layer-group"></i></a>
+                <a class="ShowCategories"  href="#">See All Categories</a>
+            </div>
+            <form asp-action="Signout" asp-controller="Accounts" asp-area = "" method="post">
+                <button>Sign out</button>
+            </form>
+        </nav>
+        <section class="about d-flex align-items-center justify-content-center flex-column mt-3">
+            <section class="tags d-flex align-items-center justify-content-between w-100">
+                <div class="tag">
+                    <div class="text">
+                        <div class="">@Model.UserCount Users</div>
+                        <div class="">@Model.UserReportCount Reports</div>
+                    </div>
+                    <div class="icons ms-5"><i class="fa-solid fa-users"></i></div>
+                </div>
+                <div class="tag">
+                    <div class="text">
+                        <div class="">@Model.PostCount Posts</div>
+                        <div class="">@Model.PostReportCount Reports</div>
+                    </div>
+                    <div class="icons ms-5"><i class="fa-regular fa-clipboard"></i></div>
+                </div>
+                <div class="tag">
+                    <div class="text">
+                        <div class="">@Model.CommentCount Comments</div>
+                        <div class="">@Model.CommentReportCount Reports</div>
+                    </div>
+                    <div class="icons ms-5"><i class="fa-regular fa-comments"></i></div>
+                </div>
+            </section>
+            <section class="bottom w-100 d-flex align-items-center justify-content-between">
+                <section class="btns d-flex align-items-center justify-content-center flex-column w-25">
+                    <button id="changePasswordBtn" class="change">Change Password</button>
+                    <button id="user-reports">User Reports</button>
+                    <button id="post-reports">Post Reports</button>
+                    <button id="comment-reports">Comment Reports</button>
+                </section>
+                <section class="users w-75">
+                    <div class="box d-flex align-items-center justify-content-between">
+                        <div class="search w-50">
+                            <aside id="search">
+                                <div class="search-input">
+                                    <input type="text" id="userSearch" placeholder="Search users..." />
+                                </div>
+                                <div class="searchMenu">
+                                </div>
+                            </aside>
+                        </div>
+                        <div class="all-users w-50">
+                            <partial name="~/Areas/User/Views/Users/Profile/_UserSearchResults.cshtml" model="@Model.Users" />
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </main>
+    <partial name="~/Areas/Admin/Views/Admins/_Script.cshtml" />
+</body>
+</html>

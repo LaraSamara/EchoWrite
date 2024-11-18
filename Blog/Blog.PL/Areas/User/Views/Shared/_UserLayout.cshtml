@@ -12,26 +12,29 @@
        @* Custome User css *@
        @RenderSection("UserStyle", required: false)
 }
-@section Nav{
+@if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+{
+    @section Nav {
     <div class="right d-flex align-items-center justify-content-evenly">
         <a class="search me-4"><i class="fa-solid fa-magnifying-glass"></i><span>Search on EchoWrite...</span></a>
         <div class="AddPost">
             <a id="addPostBtn"><i class="fa-regular fa-square-plus"></i></a>
         </div>
     </div>
+    }
+
 }
 <div class="container mt-3 d-flex align-items-start justify-content-between ">
         <div class="main w-75">
             @RenderBody()
         </div>
-
-@*         @await Component.InvokeAsync("CategoryList") *@
-    </div>
-
+</div>
 @section Scripts{
-    <partial name="_Script" />
+    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+    {
+        <partial name="_Script" />
+    }
     @await RenderSectionAsync("Scripts", required: false)
-
 }
 
 

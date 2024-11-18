@@ -11,7 +11,7 @@ namespace Blog.PL.Areas.User.ViewModels.Post
         public string UserProfilePictureUrl { get; set; }
         public int PostId { get; set; }
         public string CategoryName { get; set; }
-        public string Content { get; set; } // Content of the post to be created
+        public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int LikeCount { get; set; }

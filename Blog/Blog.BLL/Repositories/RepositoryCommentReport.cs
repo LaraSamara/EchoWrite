@@ -42,13 +42,27 @@ namespace Blog.BLL.Repositories
 
         public IEnumerable<CommentReport> GetAll()
         {
-            return _context.CommentsReport.AsNoTracking().ToList();
+            return _context.CommentsReport.AsNoTracking()
+                .Where(report => _context.Users.Any(user => user.Id == report.ReporterId) &&
+                                 _context.Comments.Any(comment => comment.Id == report.CommentId))
+                .Where(report => report.IsHandled == false)
+                .Include(report => report.Comment)
+                .Include(report => report.Reporter)
+                .ToList();
         }
 
         public int Update(CommentReport report)
         {
             _context.CommentsReport.Update(report);
             return _context.SaveChanges();
+        }
+        public int CommentReportCount()
+        {
+            return _context.CommentsReport.Count();
+        }
+        public IEnumerable<CommentReport> GetCommentsReportsByUser(string Id)
+        {
+            return _context.CommentsReport.AsNoTracking().Where(c => c.ReporterId == Id).ToList();  
         }
     }
 }

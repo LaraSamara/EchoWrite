@@ -402,13 +402,13 @@ namespace Blog.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e347bee9-63b3-40a6-a929-7cadbea4b985",
+                            Id = "893478b0-3e7c-4491-8308-41c7c6f34bea",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "a606a8f6-8e71-427b-acf5-af2b5a2782c7",
+                            Id = "97d09ed1-16dc-4042-a145-9e8ed7628ecd",
                             Name = "User",
                             NormalizedName = "USER"
                         });

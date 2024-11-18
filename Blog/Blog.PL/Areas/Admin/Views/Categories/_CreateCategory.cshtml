@@ -1,0 +1,11 @@
+﻿@model Blog.PL.Areas.Admin.ViewModels.CategoryViewModel;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+  <section>
+        <div class="heading w-100 d-flex align-items-center justify-content-center flex-column py-3">Create Category</div>
+        <form class="p-4 addPostForm" id="CreateCategoryBtn" method="post">
+            <div class="form-input d-flex align-items-start justify-content-center flex-column">
+                <label asp-for="Name"></label>
+                <input asp-for="Name"class=" mt-2" >
+            </div>
+        </form>
+  </section>
