@@ -1,8 +1,9 @@
 ﻿section.user-reports,
-section.details{
-    max-height: 500px !important; /* Set desired max height */
-    overflow-y: auto !important; /* Enable vertical scroll */
-    padding-right: 10px !important; /* Add padding for scrollbar space */
+section.details,
+section#category-card {
+    max-height: 500px !important;
+    overflow-y: auto !important;
+    padding-right: 10px !important;
 }
 section .title {
     font-size: 2rem;
@@ -82,5 +83,5 @@ a.details {
 }
 
 .swal2-popup .swal2-cancel:hover {
-    background: linear-gradient(to right, #b30000, #ff4d4d);
+    background: linear-gradient(to right, #b30000, #ff4d4d)!important;
 }

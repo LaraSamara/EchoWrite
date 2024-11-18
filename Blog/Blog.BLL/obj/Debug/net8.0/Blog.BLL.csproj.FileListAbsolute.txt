@@ -1,0 +1,16 @@
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\bin\Debug\net8.0\Blog.BLL.deps.json
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\bin\Debug\net8.0\Blog.BLL.dll
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\bin\Debug\net8.0\Blog.BLL.pdb
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\bin\Debug\net8.0\Blog.DAL.dll
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\bin\Debug\net8.0\Blog.DAL.pdb
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.csproj.AssemblyReference.cache
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.AssemblyInfoInputs.cache
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.AssemblyInfo.cs
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.csproj.CoreCompileInputs.cache
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.sourcelink.json
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.csproj.Up2Date
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.dll
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\refint\Blog.BLL.dll
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\Blog.BLL.pdb
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.BLL\obj\Debug\net8.0\ref\Blog.BLL.dll

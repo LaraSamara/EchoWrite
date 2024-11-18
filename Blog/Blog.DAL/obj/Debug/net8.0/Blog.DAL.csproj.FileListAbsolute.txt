@@ -1,0 +1,15 @@
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\bin\Debug\net8.0\Blog.DAL.deps.json
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\bin\Debug\net8.0\Blog.DAL.runtimeconfig.json
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\bin\Debug\net8.0\Blog.DAL.dll
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\bin\Debug\net8.0\Blog.DAL.pdb
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.csproj.AssemblyReference.cache
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.AssemblyInfoInputs.cache
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.AssemblyInfo.cs
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.csproj.CoreCompileInputs.cache
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.sourcelink.json
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.dll
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\refint\Blog.DAL.dll
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.pdb
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\Blog.DAL.genruntimeconfig.cache
+C:\Users\BisanCo\Desktop\MVC\Blog\Blog.DAL\obj\Debug\net8.0\ref\Blog.DAL.dll

@@ -304,7 +304,6 @@
     });
 </script>
 
-
 @* Handle Delete Post/Comment/User *@
 <script>
     $(document).on('click', '.remove', function () {
@@ -508,11 +507,11 @@ Show Categories *@
                     // Create a scrollable alert using SweetAlert2 or a custom modal
                     Swal.fire({
                         html: response, // Response should be the partial view with user details
-                        width: '600px',
                         showCloseButton: true,
                         showConfirmButton: false,
+                        width: '600px',
                         scrollbarPadding: false,
-                        heightAuto: false, // Ensure alert fits with scrollable content
+                        heightAuto: false,
                     });
                 },
                 error: function () {

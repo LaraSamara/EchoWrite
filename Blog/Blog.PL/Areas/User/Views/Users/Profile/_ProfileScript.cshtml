@@ -285,12 +285,14 @@
                     method: 'POST',
                     success: function (response) {
                         if (response.success) {
-                            // If successful, show a success message and remove the item from the page
+                            // If successful, show a success message and redirect to Dashboard
                             Swal.fire(
                                 'Deleted!',
                                 successMessage,
                                 'success'
                             ).then(() => {
+                                // Redirect to the Dashboard page
+                                window.location.href = '/Admin/Admins/Profile'; // Replace with your actual Dashboard URL
                             });
                         } else {
                             // If deletion fails, show an error message

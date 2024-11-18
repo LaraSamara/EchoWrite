@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<Blog.PL.Areas.Admin.ViewModels.CategoryViewModel>;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@foreach(var user in Model)
-{
-    <div class="card">
-        <div class="mt-3">@user.Name</div>
-    </div>
-}
+
+
+<section class="m-3" id="category-card">
+    @foreach (var user in Model)
+    {
+        <div class="card d-flex align-items-start justify-content-center flex-column">
+            <div class="mt-3 fs-4 category-name">@user.Name</div>
+        </div>
+    }
+</section>

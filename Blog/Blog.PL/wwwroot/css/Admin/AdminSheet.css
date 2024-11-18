@@ -108,7 +108,8 @@ nav .category a:hover{
     height: 420px;
     overflow-y: auto;
 }
-.box .search input {
+.box .search input,
+.card input{
     width: 100%;
     padding: 15px;
     border-radius: 12px;
@@ -116,17 +117,32 @@ nav .category a:hover{
     border: 1px solid #2394f0;
     overflow-y: auto;
 }
-.box .search input::placeholder{
+.card label,
+.category-name {
+    color: #2394f0;
+    font-weight: bold;
+}
+.box .search input::placeholder,
+.card input::placeholder{
        font-size: 1.2rem;
        color: #2394f0;
 }
 .box .all-users {
     padding: 25px;
+    overflow-y: auto;
+    height: 420px;
 }
-.searchMenu .NoResult {
+.user-box {
+    height: 420px;
+    overflow-y: auto;
+}
+.searchMenu .NoResult,
+.NoResult {
     text-align: center !important;
     line-height: 300px !important;
     font-size: 1.8rem !important;
     font-weight: bold !important;
     color: #2394f0 !important;
 }
+
+
