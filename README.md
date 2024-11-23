@@ -44,8 +44,17 @@ The admin area allows platform moderation, handling reported content, and managi
 ## 📹 EchoWrite Demo
 Get started with EchoWrite by watching our introductory video:  
 
-![Discover EchoWrite](https://img.youtube.com/vi/your_video_id/0.jpg)  
-[![Watch the Video](https://img.youtube.com/vi/your_video_id/0.jpg)](https://www.youtube.com/watch?v=your_video_id)  
+### User Login: 
+https://github.com/user-attachments/assets/a1dff269-6b2f-49b1-a1b8-f7bf42f02ea4
+
+https://github.com/user-attachments/assets/b04a15d6-bd33-46f8-9dad-5e49576b7bc9
+
+### Admin Login: 
+https://github.com/user-attachments/assets/7aac97ad-ff7d-4c21-97f4-a35517c28d06
+
+
+
+
 
 ---
 ## 🔧 Getting Started  
