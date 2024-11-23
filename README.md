@@ -29,7 +29,7 @@ The admin area allows platform moderation, handling reported content, and managi
 ### Additional Features  
 - **Security**: Robust authentication using ASP.NET Identity.  
 - **Ease of Use**: Intuitive user interface and streamlined workflows.  
-- **Modern Styling**: Clean and professional layout with dark and light theme options.  
+- **Modern Styling**: Clean and professional layout.  
 
 ---
 
